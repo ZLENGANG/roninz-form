@@ -1,15 +1,27 @@
 <template>
-  <div>form11</div>
+  <readonly-view
+    v-if="readonly"
+    :form-config="formConfig"
+    :form-style="formStyle"
+  />
+  <form-view v-else />
 </template>
 
 <script setup lang="ts">
-import { RFormProps } from './index';
-const props = withDefaults(defineProps<RFormProps>(), {
-  readOnly: false,
-  layout: 'horizontal',
-});
+import type { RFormProps } from "./index";
+import readonlyView from "./components/readonly-view/index.vue";
+import formView from "./components/form-view/index.vue";
 
-console.log(props.readOnly);
+withDefaults(defineProps<RFormProps>(), {
+  readonly: false,
+  layout: "inline",
+  formStyle() {
+    return {
+      "--grid-count": 3,
+    };
+  },
+  formConfig: () => [],
+});
 </script>
 
 <style></style>
