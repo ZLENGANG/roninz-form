@@ -1,7 +1,7 @@
 /**通用表单属性 */
 export interface RFormCommonProps {
   /**表单样式 */
-  formStyle?: Partial<CSSStyleDeclaration>;
+  formStyle?: Partial<CSSStyleDeclaration> & GridCount;
 
   /**表单配置 */
   formConfig: RFormItemProps[];
@@ -17,7 +17,7 @@ export interface RFormProps extends RFormCommonProps {
    * - inline - 水平布局
    * - vertical - 垂直布局
    */
-  layout?: "inline" | "vertical";
+  layout?: 'inline' | 'vertical';
 }
 
 /**详情表单组件属性 */
