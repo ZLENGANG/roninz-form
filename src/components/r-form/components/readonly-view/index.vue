@@ -4,29 +4,54 @@
       v-for="item in form_config"
       :key="item.key"
       :class="item.cls"
-      :style="(item.style as StyleValue)"
-    ></section>
+      :style="item.style"
+    >
+      <span class="r-form-readonly-label">
+        <slot :name="`${item.key}-label`" :label="item.label">
+          <span :title="item.label"> {{ item.label }}</span>
+        </slot>
+      </span>
+
+      <section class="r-form-readonly-content">
+        <template v-if="item.type">
+          <template v-if="isInnerComponent(item.type)">
+            {{ formatFormItem(item) }}
+          </template>
+        </template>
+      </section>
+    </section>
   </section>
 </template>
 
 <script setup lang="ts">
-import type { RReadonlyViewProps } from '../../index';
-import { watch, ref, StyleValue } from 'vue';
+import type { RReadonlyViewProps } from "../../index";
+import { watch, ref, StyleValue } from "vue";
 
-const { formConfig, formStyle } = withDefaults(
+const { formConfig, formStyle, formData } = withDefaults(
   defineProps<RReadonlyViewProps>(),
   {
     formStyle() {
       return {
-        '--grid-count': 3,
+        "--grid-count": 3,
       };
     },
     formConfig: () => [],
+    formData: () => ({}),
   }
 );
 
 const form_config = ref<RFormItemProps[]>([]);
 const curSpan = ref(0);
+const innerComponents = [
+  "input",
+  "input-number",
+  "input-money",
+  "textarea",
+  "select",
+  "checkbox",
+  "radio",
+  "date",
+];
 
 watch(
   formConfig,
@@ -36,10 +61,11 @@ watch(
   { deep: true, immediate: true }
 );
 
+/* 获取表单配置 */
 function getFormConfig(config: RFormItemProps[] = []) {
-  const count = formStyle['--grid-count'] || 3;
+  const count = formStyle["--grid-count"] || 3;
   const filterConfig = config.filter((item) => !item.hide);
-  const BASE_NAME = 'r-form-readonly';
+  const BASE_NAME = "r-form-readonly";
 
   form_config.value = filterConfig.map((item, index) => {
     const cls = [`${BASE_NAME}-col`, `${BASE_NAME}-${item.key}`];
@@ -76,6 +102,41 @@ function getFormConfig(config: RFormItemProps[] = []) {
     };
   });
   console.log(form_config.value, count);
+}
+
+/* 判断是否为内置组件 */
+function isInnerComponent(name: string) {
+  return innerComponents.includes(name);
+}
+
+/* 格式化表单配置 */
+function formatFormItem(formItem: RFormItemProps) {
+  const { type, key, initValue } = formItem;
+  let text = "";
+  switch (type) {
+    case "input":
+    case "input-number":
+    case "textarea":
+      text = formData[key] || initValue;
+      break;
+
+    case "select":
+      text = formatSelect(formItem);
+      break;
+    default:
+      text = initValue || "-";
+  }
+
+  return text;
+}
+
+function formatSelect(formItem: RFormItemProps) {
+  const { key, config } = formItem;
+  const value = formData[key];
+  const option = config?.options?.find(
+    (item: { value: any }) => item.value === value
+  );
+  return option?.label || "-";
 }
 </script>
 

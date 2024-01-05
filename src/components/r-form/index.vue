@@ -3,6 +3,7 @@
     v-if="readonly"
     :form-config="formConfig"
     :form-style="formStyle"
+    :form-data="formData"
   />
   <form-view v-else />
 </template>
@@ -21,6 +22,7 @@ withDefaults(defineProps<RFormProps>(), {
     };
   },
   formConfig: () => [],
+  formData: () => ({}),
 });
 </script>
 
