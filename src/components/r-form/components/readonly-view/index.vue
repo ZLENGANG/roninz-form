@@ -1,5 +1,5 @@
 <template>
-  <section class="r-form-readonly" :style="(formStyle as StyleValue)">
+  <section class="r-form-readonly" :style="(style as StyleValue)">
     <section
       v-for="item in form_config"
       :key="item.key"
@@ -27,15 +27,15 @@
 import type { RReadonlyViewProps } from "../../index";
 import { watch, ref, StyleValue } from "vue";
 
-const { formConfig, formStyle, formData } = withDefaults(
+const { fields, style, formData } = withDefaults(
   defineProps<RReadonlyViewProps>(),
   {
-    formStyle() {
+    style() {
       return {
         "--grid-count": 3,
       };
     },
-    formConfig: () => [],
+    fields: () => [],
     formData: () => ({}),
   }
 );
@@ -54,7 +54,7 @@ const innerComponents = [
 ];
 
 watch(
-  formConfig,
+  fields,
   (val) => {
     getFormConfig(val);
   },
@@ -63,7 +63,7 @@ watch(
 
 /* 获取表单配置 */
 function getFormConfig(config: RFormItemProps[] = []) {
-  const count = formStyle["--grid-count"] || 3;
+  const count = style["--grid-count"] || 3;
   const filterConfig = config.filter((item) => !item.hide);
   const BASE_NAME = "r-form-readonly";
 
