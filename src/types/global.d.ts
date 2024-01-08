@@ -20,13 +20,13 @@ declare interface RFormItemProps {
    */
   type?:
     | "input"
-    | "input-number"
-    | "input-money"
-    | "textarea"
-    | "select"
-    | "checkbox"
-    | "radio"
-    | "date";
+    // | "input-number"
+    // | "input-money"
+    // | "textarea"
+    | "select";
+  // | "checkbox"
+  // | "radio"
+  // | "date";
 
   /**是否隐藏 */
   hide?: boolean;
@@ -46,8 +46,24 @@ declare interface RFormItemProps {
   /**初始值 */
   initValue?: any;
 
-  /**组件配置 */
-  config?: any;
+  /**是否禁用 */
+  disabled?: boolean;
+  // import { ElSelectV2 } from "element-plus";
+
+  /**下拉框等选项配置 */
+  options?: any[];
+
+  /**是否必填/必选 */
+  required?: boolean;
+
+  /**字段校验规则 */
+  rules?: import("element-plus").FormItemRule[];
+
+  /**组件属性 */
+  props?: any;
+
+  /**组件事件 */
+  events?: any;
 
   [key: string]: any;
 }
