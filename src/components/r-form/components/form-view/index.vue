@@ -10,18 +10,19 @@
       <form-component
         :form-item="item"
         :value="_formData[item.key]"
+        @change="handleChangeValue"
       ></form-component>
     </el-form-item>
   </el-form>
 </template>
 
 <script setup lang="ts">
-import { watch, ref } from "vue";
-import type { RFormViewProps } from "../../index";
-import { ElForm, ElFormItem, FormItemRule } from "element-plus";
-import formComponent from "../form-component/index.vue";
+import { watch, ref } from 'vue';
+import type { RFormViewProps } from '../../index';
+import { ElForm, ElFormItem, FormItemRule } from 'element-plus';
+import formComponent from '../form-component/index.vue';
 
-type FormDataType = RFormViewProps["formData"];
+type FormDataType = RFormViewProps['formData'];
 
 const props = defineProps<RFormViewProps>();
 const _formData = ref<FormDataType>({});
@@ -34,21 +35,23 @@ watch(
   { deep: true, immediate: true }
 );
 
+/* 设置表单数据 */
 function setFormData(val: FormDataType) {
   const res: FormDataType = {};
   props.fields.forEach((field) => {
-    res[field.key] = val[field.key] || field.initValue || "";
+    res[field.key] = val[field.key] || field.initValue;
   });
   return res;
 }
 
+/* 获取校验规则 */
 function getRules(item: RFormItemProps) {
   let rules: FormItemRule[] = [];
   const findItem = props.fields.find((i) => i.key === item.key);
   const requiredItem: FormItemRule = {
     required: true,
     message: `${findItem?.label}不能为空！`,
-    trigger: "blur",
+    trigger: 'blur',
   };
 
   if (item.required) {
@@ -65,6 +68,11 @@ function getRules(item: RFormItemProps) {
     }
   }
   return rules;
+}
+
+/* 处理表单数据 */
+function handleChangeValue(key: string, val: string) {
+  props.formData[key] = val;
 }
 </script>
 

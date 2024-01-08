@@ -1,5 +1,5 @@
 <template>
-  <r-form :fields="fieldConfigs" :formData="formData"></r-form>
+  <r-form :fields="fieldConfigs" :formData="formData"> </r-form>
 
   <!-- <el-select-v2
     v-model="value"
@@ -10,7 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+// import { ElSelectV2 } from 'element-plus';
+import { h, ref } from 'vue';
+import { ElButton } from 'element-plus';
 
 // const initials = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
 
@@ -31,65 +33,80 @@ setTimeout(() => {
 
 const fieldConfigs = ref<RFormItemProps[]>([
   {
-    key: "name",
-    label: "姓名",
+    key: 'name',
+    label: '姓名',
     required: true,
     rules: [
       {
         required: true,
-        message: "姓名1不能为空！",
+        message: '姓名1不能为空！',
       },
     ],
     props: {
-      placeholder: "请输入姓名",
+      placeholder: '请输入姓名',
     },
-    events: {
-      blur(e: EventTarget) {
-        console.log(e);
+    events: {},
+    slots: {
+      // prefix() {
+      //   return h('span', 'prefix');
+      // },
+      suffix() {
+        return h(
+          ElButton,
+          {
+            type: 'primary',
+            onClick() {
+              console.log('click');
+            },
+          },
+          () => '查看'
+        );
       },
     },
   },
   {
-    key: "age",
-    label: "年龄",
-    type: "input",
+    key: 'age',
+    label: '年龄',
+    type: 'input',
     hide: true,
   },
   {
-    key: "age1",
-    label: "年龄",
-    type: "input",
+    key: 'age1',
+    label: '年龄',
+    type: 'input',
   },
   {
-    key: "age2",
-    label: "年龄",
-    type: "input",
+    key: 'age2',
+    label: '年龄',
+    type: 'input',
   },
   {
-    key: "class",
-    label: "班级",
+    key: 'class',
+    label: '班级',
     // hide: true,
-    type: "select",
+    type: 'select',
     // disabled: true,
-    // initValue: "n2",
+    // initValue: 'n2',
     required: true,
     rules: [
       {
         required: true,
-        message: "班级不能为空！",
+        message: '班级不能为空！',
       },
     ],
     options: [
-      { label: "1班", value: "n1" },
-      { label: "2班", value: "n2" },
+      { label: '1班', value: 'n1' },
+      { label: '2班', value: 'n2' },
     ],
+    props: {},
+    events: {},
   },
   {
-    key: "age4",
-    label: "年龄",
-    type: "input",
+    key: 'age4',
+    label: '年龄',
+    type: 'input',
     style: {
-      width: "100px",
+      width: '100px',
     },
   },
 ]);

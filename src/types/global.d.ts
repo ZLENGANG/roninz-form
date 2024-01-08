@@ -65,5 +65,8 @@ declare interface RFormItemProps {
   /**组件事件 */
   events?: any;
 
+  /**插槽 */
+  slots?: any;
+
   [key: string]: any;
 }
