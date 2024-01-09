@@ -5,7 +5,7 @@
     v-on="_events"
     v-model="_value"
     @change="handleChange"
-    @input="handleChange"
+    @input="handleInput"
   >
     <template v-for="(render, key) of formItem.compSlots" v-slot:[key]>
       <render-slot :key="key" :render="render" />
@@ -14,23 +14,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { RFormComponentProps } from "../../index";
-import RenderSlot from "../slot/render-slot";
+import { ref, watch } from 'vue';
+import { RFormComponentProps } from '../../index';
+import RenderSlot from '../slot/render-slot';
 
 const component: { [key in keyof typeof CompType]: string } = {
-  input: "ElInput",
-  "input-number": "ElInputNumber",
-  autocomplete: "ElAutocomplete",
-  select: "ElSelectV2",
-  date: "ElDatePicker",
-  radio: "r-radio",
+  input: 'ElInput',
+  'input-number': 'ElInputNumber',
+  autocomplete: 'ElAutocomplete',
+  select: 'ElSelectV2',
+  date: 'ElDatePicker',
+  radio: 'r-radio',
+  rate: 'ElRate',
 };
 
+const inputTypeArr = ['input', 'autocomplete', 'input-number'];
+const chooseTypeArr = ['select', 'date'];
+
 const props = defineProps<RFormComponentProps>();
-const emit = defineEmits(["change"]);
+const emit = defineEmits(['change']);
 const formItem = props.formItem;
-const curComp = component[formItem.type || "input"];
+const formItemType = formItem.type || 'input';
+const curComp = component[formItemType];
 const itemProps = formItem.props || {};
 
 const _config = {
@@ -44,20 +49,17 @@ const _config = {
 
 /* 获取placeholder */
 function getPlaceholder() {
-  let defaultPlaceholder = "";
-  const type = formItem.type as string;
-  const inputTypeArr = ["input", "autocomplete"];
-  const chooseTypeArr = ["select", "date"];
+  let defaultPlaceholder = '';
 
-  if (chooseTypeArr.includes(type)) {
+  if (chooseTypeArr.includes(formItemType)) {
     defaultPlaceholder = `请选择${formItem.label}`;
-  } else if (inputTypeArr.includes(type)) {
+  } else if (inputTypeArr.includes(formItemType)) {
     defaultPlaceholder = `请输入${formItem.label}`;
   }
   return formItem.placeholder || itemProps.placeholder || defaultPlaceholder;
 }
 
-const _value = ref("");
+const _value = ref('');
 const _events = formItem.events || {};
 
 watch(
@@ -70,7 +72,19 @@ watch(
 
 /* 处理表单数据 */
 function handleChange(val: string | any[]) {
-  emit("change", formItem.key, val);
+  emit('change', formItem.key, val);
+}
+
+function handleInput(val: string | { target?: { value: string } }) {
+  if (inputTypeArr.includes(formItemType)) {
+    emit('change', formItem.key, val);
+  }
+
+  if (formItemType === 'radio') {
+    if (typeof val !== 'string') {
+      emit('change', formItem.key, val.target?.value);
+    }
+  }
 }
 </script>
 

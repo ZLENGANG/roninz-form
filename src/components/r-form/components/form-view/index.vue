@@ -27,14 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, useSlots } from "vue";
-import type { RFormViewProps } from "../../index";
-import { ElForm, ElFormItem, FormItemRule } from "element-plus";
-import formComponent from "../form-component/index.vue";
-import FormItemSlot from "../slot/form-item-slot";
-import RenderSlot from "../slot/render-slot";
+import { watch, ref, useSlots } from 'vue';
+import type { RFormViewProps } from '../../index';
+import { ElForm, ElFormItem, FormItemRule } from 'element-plus';
+import formComponent from '../form-component/index.vue';
+import FormItemSlot from '../slot/form-item-slot';
+import RenderSlot from '../slot/render-slot';
 
-type FormDataType = RFormViewProps["formData"];
+type FormDataType = RFormViewProps['formData'];
 
 const props = defineProps<RFormViewProps>();
 const _formData = ref<FormDataType>({});
@@ -64,7 +64,6 @@ function getRules(item: RFormItemProps) {
   const requiredItem: FormItemRule = {
     required: true,
     message: `${findItem?.label}不能为空！`,
-    trigger: "blur",
   };
 
   if (item.required) {

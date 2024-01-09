@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 // import { ElSelectV2 } from 'element-plus';
-import { h, ref } from "vue";
-import { ElButton } from "element-plus";
+import { h, ref } from 'vue';
+import { ElButton } from 'element-plus';
 
 // const initials = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
 
@@ -41,47 +41,47 @@ setTimeout(() => {
 
 const fieldConfigs = ref<RFormItemProps[]>([
   {
-    key: "name",
-    label: "姓名",
+    key: 'name',
+    label: '姓名',
     required: true,
     rules: [
-      {
-        required: true,
-        message: "姓名1不能为空！",
-      },
+      // {
+      //   required: true,
+      //   message: '姓名1不能为空！',
+      // },
     ],
     props: {
-      placeholder: "请输入姓名",
+      placeholder: '请输入姓名',
     },
     events: {},
     compSlots: {
       prefix() {
-        return h("span", "prefix");
+        return h('span', 'prefix');
       },
       suffix() {
         return h(
           ElButton,
           {
-            type: "primary",
+            type: 'primary',
             onClick() {
-              console.log("click");
+              console.log(formData.value);
             },
           },
-          () => "查看"
+          () => '查看'
         );
       },
     },
   },
   {
-    key: "age",
-    label: "年龄",
-    type: "input",
+    key: 'age',
+    label: '年龄',
+    type: 'input',
     hide: true,
   },
   {
-    key: "age1",
-    label: "年龄",
-    type: "input",
+    key: 'age1',
+    label: '年龄',
+    type: 'input',
     // render() {
     //   return h(
     //     ElButton,
@@ -96,81 +96,92 @@ const fieldConfigs = ref<RFormItemProps[]>([
     // },
   },
   {
-    key: "age2",
-    label: "年龄",
-    type: "input",
+    key: 'age2',
+    label: '年龄',
+    type: 'input',
     // slot: "slot-age2",
     required: true,
   },
   {
-    key: "class",
-    label: "班级",
+    key: 'class',
+    label: '班级',
     // hide: true,
-    type: "select",
+    type: 'select',
     // disabled: true,
     // initValue: 'n2',
     required: true,
     rules: [
       {
         required: true,
-        message: "班级不能为空！",
+        message: '班级不能为空！',
       },
     ],
     options: [
-      { label: "1班", value: "n1" },
-      { label: "2班", value: "n2" },
+      { label: '1班', value: 'n1' },
+      { label: '2班', value: 'n2' },
     ],
     props: {},
     events: {},
   },
   {
-    key: "searchSuggest",
-    label: "搜索建议",
-    type: "autocomplete",
+    key: 'searchSuggest',
+    label: '搜索建议',
+    type: 'autocomplete',
     required: true,
     props: {
-      "fetch-suggestions": (q: string, cb: Function) => {
+      'fetch-suggestions': (q: string, cb: Function) => {
         console.log(q);
         const arr = [
-          { value: "vue", link: "https://github.com/vuejs/vue" },
-          { value: "element", link: "https://github.com/ElemeFE/element" },
+          { value: 'vue', link: 'https://github.com/vuejs/vue' },
+          { value: 'element', link: 'https://github.com/ElemeFE/element' },
         ];
         cb(arr.filter((item) => item.value.indexOf(q) > -1));
       },
     },
   },
   {
-    key: "input-number",
-    label: "数字输入框",
-    type: "input-number",
+    key: 'input-number',
+    label: '数字输入框',
+    type: 'input-number',
     required: true,
-    initValue: 0,
-    props: {
-      precision: 2,
-    },
-  },
-
-  {
-    key: "date",
-    label: "日期选择",
-    type: "date",
-    required: true,
-    props: {
-      type: "daterange",
-    },
-  },
-
-  {
-    key: "radio",
-    label: "单选框",
-    type: "radio",
-    required: true,
-    initValue: "n2",
-    options: [
-      { label: "选项1", value: "n1" },
-      { label: "选项2", value: "n2" },
-    ],
     props: {},
+  },
+
+  {
+    key: 'date',
+    label: '日期选择',
+    type: 'date',
+    required: true,
+    props: {
+      type: 'daterange',
+    },
+  },
+
+  {
+    key: 'radio',
+    label: '单选框',
+    type: 'radio',
+    required: true,
+    // initValue: '选项1',
+    options: [
+      { label: '选项1', value: 'n1' },
+      { label: '选项2', value: 'n2' },
+    ],
+    props: {
+      // disabled: true,
+      // type: 'button',
+    },
+  },
+
+  {
+    key: 'rate',
+    label: '评分',
+    type: 'rate',
+    required: true,
+    props: {
+      // disabled: true,
+      // type: 'button',
+    },
   },
 ]);
 </script>
