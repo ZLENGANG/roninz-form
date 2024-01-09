@@ -7,7 +7,14 @@
       :prop="item.key"
       :rules="getRules(item)"
     >
+      <form-item-slot
+        v-if="item.slot"
+        :slots="formItemSlots"
+        :formItem="item"
+        :formData="_formData"
+      />
       <form-component
+        v-else
         :form-item="item"
         :value="_formData[item.key]"
         @change="handleChangeValue"
@@ -17,15 +24,17 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref } from 'vue';
-import type { RFormViewProps } from '../../index';
-import { ElForm, ElFormItem, FormItemRule } from 'element-plus';
-import formComponent from '../form-component/index.vue';
+import { watch, ref, useSlots } from "vue";
+import type { RFormViewProps } from "../../index";
+import { ElForm, ElFormItem, FormItemRule } from "element-plus";
+import formComponent from "../form-component/index.vue";
+import FormItemSlot from "../slot/form-item-slot";
 
-type FormDataType = RFormViewProps['formData'];
+type FormDataType = RFormViewProps["formData"];
 
 const props = defineProps<RFormViewProps>();
 const _formData = ref<FormDataType>({});
+const formItemSlots = useSlots();
 
 watch(
   () => props.formData,
@@ -51,7 +60,7 @@ function getRules(item: RFormItemProps) {
   const requiredItem: FormItemRule = {
     required: true,
     message: `${findItem?.label}不能为空！`,
-    trigger: 'blur',
+    trigger: "blur",
   };
 
   if (item.required) {

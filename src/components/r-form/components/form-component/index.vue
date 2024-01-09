@@ -7,8 +7,8 @@
     @change="handleChange"
     @input="handleChange"
   >
-    <template v-for="(render, key) of formItem.slots" v-slot:[key]>
-      <extend-slot :key="key" :render="render" />
+    <template v-for="(render, key) of formItem.compSlots" v-slot:[key]>
+      <comp-slot :key="key" :render="render" />
     </template>
   </component>
 </template>
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { RFormComponentProps } from '../../index';
-import ExtendSlot from './extend-slot';
+import CompSlot from '../slot/comp-slot';
 const component = {
   input: 'ElInput',
   select: 'ElSelectV2',
@@ -26,7 +26,6 @@ const emit = defineEmits(['change']);
 const formItem = props.formItem;
 const curComp = component[formItem.type || 'input'];
 const itemProps = formItem.props || {};
-console.log(formItem.slots);
 
 const _config = {
   ...itemProps,
@@ -66,3 +65,4 @@ function handleChange(val: string | any[]) {
 </script>
 
 <style scoped></style>
+../slot/extend-slot
