@@ -13,6 +13,9 @@
         :formItem="item"
         :formData="_formData"
       />
+
+      <render-slot v-else-if="item.render" :render="item.render" />
+
       <form-component
         v-else
         :form-item="item"
@@ -29,6 +32,7 @@ import type { RFormViewProps } from "../../index";
 import { ElForm, ElFormItem, FormItemRule } from "element-plus";
 import formComponent from "../form-component/index.vue";
 import FormItemSlot from "../slot/form-item-slot";
+import RenderSlot from "../slot/render-slot";
 
 type FormDataType = RFormViewProps["formData"];
 

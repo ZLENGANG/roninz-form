@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 // import { ElSelectV2 } from 'element-plus';
-import { ref } from "vue";
+import { h, ref } from "vue";
 import { ElButton } from "element-plus";
 
 // const initials = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
@@ -54,23 +54,23 @@ const fieldConfigs = ref<RFormItemProps[]>([
       placeholder: "请输入姓名",
     },
     events: {},
-    // compSlots: {
-    //   prefix() {
-    //     return h('span', 'prefix');
-    //   },
-    //   suffix() {
-    //     return h(
-    //       ElButton,
-    //       {
-    //         type: "primary",
-    //         onClick() {
-    //           console.log("click");
-    //         },
-    //       },
-    //       () => "查看"
-    //     );
-    //   },
-    // },
+    compSlots: {
+      prefix() {
+        return h("span", "prefix");
+      },
+      suffix() {
+        return h(
+          ElButton,
+          {
+            type: "primary",
+            onClick() {
+              console.log("click");
+            },
+          },
+          () => "查看"
+        );
+      },
+    },
   },
   {
     key: "age",
@@ -82,14 +82,25 @@ const fieldConfigs = ref<RFormItemProps[]>([
     key: "age1",
     label: "年龄",
     type: "input",
+    // render() {
+    //   return h(
+    //     ElButton,
+    //     {
+    //       type: "primary",
+    //       onClick() {
+    //         console.log("click");
+    //       },
+    //     },
+    //     () => "查看"
+    //   );
+    // },
   },
   {
     key: "age2",
     label: "年龄",
     type: "input",
-    slot: "slot-age2",
+    // slot: "slot-age2",
     required: true,
-
   },
   {
     key: "class",
@@ -113,12 +124,53 @@ const fieldConfigs = ref<RFormItemProps[]>([
     events: {},
   },
   {
-    key: "age4",
-    label: "年龄",
-    type: "input",
-    style: {
-      width: "100px",
+    key: "searchSuggest",
+    label: "搜索建议",
+    type: "autocomplete",
+    required: true,
+    props: {
+      "fetch-suggestions": (q: string, cb: Function) => {
+        console.log(q);
+        const arr = [
+          { value: "vue", link: "https://github.com/vuejs/vue" },
+          { value: "element", link: "https://github.com/ElemeFE/element" },
+        ];
+        cb(arr.filter((item) => item.value.indexOf(q) > -1));
+      },
     },
+  },
+  {
+    key: "input-number",
+    label: "数字输入框",
+    type: "input-number",
+    required: true,
+    initValue: 0,
+    props: {
+      precision: 2,
+    },
+  },
+
+  {
+    key: "date",
+    label: "日期选择",
+    type: "date",
+    required: true,
+    props: {
+      type: "daterange",
+    },
+  },
+
+  {
+    key: "radio",
+    label: "单选框",
+    type: "radio",
+    required: true,
+    initValue: "n2",
+    options: [
+      { label: "选项1", value: "n1" },
+      { label: "选项2", value: "n2" },
+    ],
+    props: {},
   },
 ]);
 </script>

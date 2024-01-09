@@ -1,3 +1,36 @@
+/**表单项类型
+ * | 类型 | 说明 |
+ * | --- | --- |
+ * | input | 文本框 |
+ * | autocomplete | 自动补全输入框 |
+ * | input-number | 数字输入框 |
+ * | date | 日期选择 |
+ * | radio | 单选框 |
+ * | input-money | 金额输入框 |
+ * | textarea | 文本域 |
+ * | select | 下拉框 |
+ * | checkbox | 复选框 |
+ */
+declare enum CompType {
+  /**输入框 */
+  input,
+
+  /**自动补全输入框 */
+  autocomplete,
+
+  /**数字输入框 */
+  "input-number",
+
+  /**下拉框 */
+  select,
+
+  /**日期选择 */
+  date,
+
+  /**单选框 */
+  radio,
+}
+
 /**表单项配置 */
 declare interface RFormItemProps {
   /**主键，必须唯一 */
@@ -6,27 +39,8 @@ declare interface RFormItemProps {
   /**表单项名称 */
   label: string;
 
-  /**表单项类型
-   * | 类型 | 说明 |
-   * | --- | --- |
-   * | input | 文本框 |
-   * | input-number | 数字输入框 |
-   * | input-money | 金额输入框 |
-   * | textarea | 文本域 |
-   * | select | 下拉框 |
-   * | checkbox | 复选框 |
-   * | radio | 单选框 |
-   * | date | 日期选择 |
-   */
-  type?:
-    | "input"
-    // | "input-number"
-    // | "input-money"
-    // | "textarea"
-    | "select";
-  // | "checkbox"
-  // | "radio"
-  // | "date";
+  /**表单项类型 */
+  type?: keyof typeof CompType;
 
   /**是否隐藏 */
   hide?: boolean;
@@ -48,7 +62,6 @@ declare interface RFormItemProps {
 
   /**是否禁用 */
   disabled?: boolean;
-  // import { ElSelectV2 } from "element-plus";
 
   /**下拉框等选项配置 */
   options?: any[];
@@ -67,6 +80,9 @@ declare interface RFormItemProps {
 
   /**表单项插槽 */
   slot?: string;
+
+  /**渲染函数 */
+  render?: Function;
 
   /**组件插槽 */
   compSlots?: any;
