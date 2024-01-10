@@ -1,25 +1,37 @@
 <template>
   <el-checkbox-group v-bind="$attrs">
     <template v-if="type === 'group'">
-      <el-checkbox v-for="item in options" v-bind="item"></el-checkbox>
+      <el-checkbox
+        v-for="item in options"
+        v-bind="item"
+        :label="item.value"
+        :border="border"
+        >{{ item.label }}</el-checkbox
+      >
     </template>
 
     <template v-if="type === 'button'">
-      <el-checkbox-button v-for="item in options" v-bind="item" />
+      <el-checkbox-button
+        v-for="item in options"
+        v-bind="item"
+        :label="item.value"
+        >{{ item.label }}</el-checkbox-button
+      >
     </template>
   </el-checkbox-group>
 </template>
 
 <script setup lang="ts">
-import type { CheckboxProps } from "element-plus";
+import type { CheckboxProps } from 'element-plus';
 
 type RCheckboxProps = {
-  options: CheckboxProps[];
-  type?: "button" | "group";
+  options: (CheckboxProps & { value: ModelValue })[];
+  type?: 'button' | 'group';
+  border?: boolean;
 };
 
 withDefaults(defineProps<RCheckboxProps>(), {
-  type: "group",
+  type: 'group',
 });
 </script>
 

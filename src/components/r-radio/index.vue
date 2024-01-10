@@ -1,9 +1,13 @@
 <template>
   <el-radio-group v-bind="$attrs">
     <template v-if="type === 'group'">
-      <el-radio v-bind="item" :label="item.value" v-for="item in options">{{
-        item.label
-      }}</el-radio>
+      <el-radio
+        v-bind="item"
+        :label="item.value"
+        v-for="item in options"
+        :border="border"
+        >{{ item.label }}</el-radio
+      >
     </template>
 
     <template v-if="type === 'button'">
@@ -18,15 +22,16 @@
 </template>
 
 <script setup lang="ts">
-import type { RadioProps, RadioButtonProps } from "element-plus";
+import type { RadioProps, RadioButtonProps } from 'element-plus';
 
 type RRadioProps = {
   options: (RadioProps & RadioButtonProps & { value: ModelValue })[];
-  type?: "button" | "group";
+  type?: 'button' | 'group';
+  border?: boolean;
 };
 
 withDefaults(defineProps<RRadioProps>(), {
-  type: "group",
+  type: 'group',
 });
 </script>
 

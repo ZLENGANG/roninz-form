@@ -6,7 +6,7 @@
         <slot :name="key" v-bind="slotScope"></slot>
       </span>
     </template>
-  </form-view>
+  </form-view> 
 </template>
 
 <script setup lang="ts">

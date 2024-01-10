@@ -24,19 +24,17 @@
       ></form-component>
     </el-form-item>
   </el-form>
-
-  <el-button @click="validate">提交</el-button>
 </template>
 
 <script setup lang="ts">
-import { watch, ref, useSlots } from "vue";
-import type { RFormCommonProps, RFormViewProps } from "../../index";
-import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
-import formComponent from "../form-component/index.vue";
-import FormItemSlot from "../slot/form-item-slot";
-import RenderSlot from "../slot/render-slot";
+import { watch, ref, useSlots } from 'vue';
+import type { RFormCommonProps, RFormViewProps } from '../../index';
+import { ElForm, ElFormItem, FormInstance, FormItemRule } from 'element-plus';
+import formComponent from '../form-component/index.vue';
+import FormItemSlot from '../slot/form-item-slot';
+import RenderSlot from '../slot/render-slot';
 
-type FormDataType = RFormViewProps["formData"];
+type FormDataType = RFormViewProps['formData'];
 
 const props = defineProps<RFormCommonProps>();
 const _formData = ref<FormDataType>({});
@@ -89,11 +87,12 @@ function getRules(item: RFormItemProps) {
   return rules;
 }
 
-/* 处理表单数据 */
+/**处理表单数据 */
 function handleChangeValue(key: string, val: string) {
   props.formData[key] = val;
 }
 
+/**校验 */
 function validate() {
   return new Promise((resolve, reject) => {
     formRef.value

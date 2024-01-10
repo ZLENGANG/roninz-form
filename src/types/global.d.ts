@@ -1,37 +1,51 @@
 /**表单项类型
  * | 类型 | 说明 |
  * | --- | --- |
- * | input | 文本框 |
  * | autocomplete | 自动补全输入框 |
- * | input-number | 数字输入框 |
- * | date | 日期选择 |
- * | radio | 单选框 |
- * | input-money | 金额输入框 |
- * | textarea | 文本域 |
- * | select | 下拉框 |
+ * | cascader | 级联选择器 |
  * | checkbox | 复选框 |
+ * | color | 颜色选择 |
+ * | date | 日期选择 |
+ * | input | 文本框 |
+ * | input-number | 数字输入框 |
+ * | radio | 单选框 |
+ * | rate | 评分 |
+ * | select | 下拉框 |
+ * | slider | 滑块 |
+ * | switch | 开关 |
+ * | transfer | 穿梭框 |
+ * | upload | 文件上传 |
  */
 declare enum CompType {
-  /**输入框 */
-  input,
-
   /**自动补全输入框 */
   autocomplete,
 
-  /**数字输入框 */
-  "input-number",
+  /**级联选择器 */
+  cascader,
 
-  /**下拉框 */
-  select,
+  /**复选框 */
+  checkbox,
+
+  /**颜色选择 */
+  color,
 
   /**日期选择 */
   date,
+
+  /**输入框 */
+  input,
+
+  /**数字输入框 */
+  'input-number',
 
   /**单选框 */
   radio,
 
   /**评分 */
   rate,
+
+  /**下拉框 */
+  select,
 
   /**滑块 */
   slider,
@@ -44,12 +58,6 @@ declare enum CompType {
 
   /**文件上传 */
   upload,
-
-  /**级联选择器 */
-  cascader,
-
-  /**复选框 */
-  checkbox,
 }
 
 /**表单项配置 */
@@ -76,7 +84,7 @@ declare interface RFormItemProps {
   className?: string[];
 
   /**自定义样式对象 */
-  style?: import("vue").StyleValue;
+  style?: import('vue').StyleValue;
 
   /**初始值 */
   initValue?: any;
@@ -91,7 +99,7 @@ declare interface RFormItemProps {
   required?: boolean;
 
   /**字段校验规则 */
-  rules?: import("element-plus").FormItemRule[];
+  rules?: import('element-plus').FormItemRule[];
 
   /**组件属性 */
   props?: any;
