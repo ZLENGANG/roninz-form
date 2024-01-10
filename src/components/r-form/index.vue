@@ -17,7 +17,6 @@ import { useSlots } from "vue";
 
 const props = withDefaults(defineProps<RFormProps>(), {
   readonly: false,
-  layout: "inline",
 });
 
 const formItemSlots = useSlots();

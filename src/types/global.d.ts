@@ -19,7 +19,7 @@ declare enum CompType {
   autocomplete,
 
   /**数字输入框 */
-  'input-number',
+  "input-number",
 
   /**下拉框 */
   select,
@@ -32,6 +32,24 @@ declare enum CompType {
 
   /**评分 */
   rate,
+
+  /**滑块 */
+  slider,
+
+  /**开关 */
+  switch,
+
+  /**穿梭框 */
+  transfer,
+
+  /**文件上传 */
+  upload,
+
+  /**级联选择器 */
+  cascader,
+
+  /**复选框 */
+  checkbox,
 }
 
 /**表单项配置 */
@@ -58,7 +76,7 @@ declare interface RFormItemProps {
   className?: string[];
 
   /**自定义样式对象 */
-  style?: import('vue').StyleValue;
+  style?: import("vue").StyleValue;
 
   /**初始值 */
   initValue?: any;
@@ -73,7 +91,7 @@ declare interface RFormItemProps {
   required?: boolean;
 
   /**字段校验规则 */
-  rules?: import('element-plus').FormItemRule[];
+  rules?: import("element-plus").FormItemRule[];
 
   /**组件属性 */
   props?: any;

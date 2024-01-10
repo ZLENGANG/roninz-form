@@ -1,12 +1,5 @@
 <template>
-  <component
-    :is="curComp"
-    v-bind="_config"
-    v-on="_events"
-    v-model="_value"
-    @change="handleChange"
-    @input="handleInput"
-  >
+  <component :is="curComp" v-bind="_config" v-on="_events" v-model="_value">
     <template v-for="(render, key) of formItem.compSlots" v-slot:[key]>
       <render-slot :key="key" :render="render" />
     </template>
@@ -14,27 +7,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { RFormComponentProps } from '../../index';
-import RenderSlot from '../slot/render-slot';
+import { computed } from "vue";
+import { RFormComponentProps } from "../../index";
+import RenderSlot from "../slot/render-slot";
 
 const component: { [key in keyof typeof CompType]: string } = {
-  input: 'ElInput',
-  'input-number': 'ElInputNumber',
-  autocomplete: 'ElAutocomplete',
-  select: 'ElSelectV2',
-  date: 'ElDatePicker',
-  radio: 'r-radio',
-  rate: 'ElRate',
+  autocomplete: "ElAutocomplete",
+  cascader: "ElCascader",
+  checkbox: "r-checkbox",
+  input: "ElInput",
+  "input-number": "ElInputNumber",
+  select: "ElSelectV2",
+  date: "ElDatePicker",
+  radio: "r-radio",
+  rate: "ElRate",
+  slider: "ElSlider",
+  switch: "ElSwitch",
+  transfer: "ElTransfer",
+  upload: "ElUpload",
 };
 
-const inputTypeArr = ['input', 'autocomplete', 'input-number'];
-const chooseTypeArr = ['select', 'date'];
+const inputTypeArr = ["input", "autocomplete", "input-number"];
+const chooseTypeArr = ["select", "date", "cascader"];
 
 const props = defineProps<RFormComponentProps>();
-const emit = defineEmits(['change']);
+const emit = defineEmits(["input"]);
 const formItem = props.formItem;
-const formItemType = formItem.type || 'input';
+const formItemType = formItem.type || "input";
 const curComp = component[formItemType];
 const itemProps = formItem.props || {};
 
@@ -49,7 +48,7 @@ const _config = {
 
 /* 获取placeholder */
 function getPlaceholder() {
-  let defaultPlaceholder = '';
+  let defaultPlaceholder = "";
 
   if (chooseTypeArr.includes(formItemType)) {
     defaultPlaceholder = `请选择${formItem.label}`;
@@ -59,31 +58,22 @@ function getPlaceholder() {
   return formItem.placeholder || itemProps.placeholder || defaultPlaceholder;
 }
 
-const _value = ref('');
+const _value = computed({
+  get: () => {
+    return props.value;
+  },
+  set: (val) => {
+    handleInput(val);
+  },
+});
+
 const _events = formItem.events || {};
 
-watch(
-  () => props.value,
-  (val) => {
-    _value.value = val;
-  },
-  { immediate: true }
-);
-
-/* 处理表单数据 */
-function handleChange(val: string | any[]) {
-  emit('change', formItem.key, val);
-}
-
-function handleInput(val: string | { target?: { value: string } }) {
-  if (inputTypeArr.includes(formItemType)) {
-    emit('change', formItem.key, val);
-  }
-
-  if (formItemType === 'radio') {
-    if (typeof val !== 'string') {
-      emit('change', formItem.key, val.target?.value);
-    }
+function handleInput(val: ModelValue | Event) {
+  if (val instanceof Event) {
+    emit("input", formItem.key, (<HTMLInputElement>val.target).value);
+  } else {
+    emit("input", formItem.key, val);
   }
 }
 </script>

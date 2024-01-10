@@ -116,7 +116,6 @@ function formatFormItem(formItem: RFormItemProps) {
   switch (type) {
     case "input":
     case "input-number":
-    case "textarea":
       text = formData[key] || initValue;
       break;
 

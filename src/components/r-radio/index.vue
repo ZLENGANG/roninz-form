@@ -1,32 +1,33 @@
 <template>
-  <el-radio-group v-bind="attrs">
+  <el-radio-group v-bind="$attrs">
     <template v-if="type === 'group'">
-      <el-radio
-        :label="item.value"
-        :disabled="item.disabled"
-        v-for="item in options"
-        >{{ item.label }}</el-radio
-      >
+      <el-radio v-bind="item" :label="item.value" v-for="item in options">{{
+        item.label
+      }}</el-radio>
     </template>
 
     <template v-if="type === 'button'">
-      <el-radio-button :label="item.label" :disabled="item.disabled" v-for="item in options" />
+      <el-radio-button
+        v-bind="item"
+        :label="item.value"
+        v-for="item in options"
+        >{{ item.label }}</el-radio-button
+      >
     </template>
   </el-radio-group>
 </template>
 
 <script setup lang="ts">
-import { useAttrs } from 'vue';
+import type { RadioProps, RadioButtonProps } from "element-plus";
 
 type RRadioProps = {
-  options: { label: string; value: ModelValue; disabled?: boolean }[];
-  type?: 'button' | 'group';
+  options: (RadioProps & RadioButtonProps & { value: ModelValue })[];
+  type?: "button" | "group";
 };
 
 withDefaults(defineProps<RRadioProps>(), {
-  type: 'group',
+  type: "group",
 });
-const attrs = useAttrs();
 </script>
 
 <style scoped></style>
