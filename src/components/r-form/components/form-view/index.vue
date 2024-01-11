@@ -41,6 +41,10 @@ const _formData = ref<FormDataType>({});
 const formItemSlots = useSlots();
 const formRef = ref<FormInstance>();
 
+defineExpose({
+  validate,
+});
+
 defineOptions({
   inheritAttrs: false,
 });
