@@ -11,7 +11,7 @@ export default defineComponent<RenderSlotProps>({
     const attrs = useAttrs();
     const renderFn = attrs.render as unknown as Function;
     if (renderFn) {
-      return renderFn();
+      return renderFn(attrs.data);
     }
   },
 });
