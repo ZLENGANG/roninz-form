@@ -23,6 +23,7 @@ const component: { [key in keyof typeof CompType]: string } = {
   checkbox: "r-checkbox",
   color: "ElColorPicker",
   input: "ElInput",
+  textarea: "ElInput",
   "input-number": "ElInputNumber",
   select: "ElSelectV2",
   date: "ElDatePicker",
@@ -53,6 +54,7 @@ const _config = {
     disabled: formItem.disabled || itemProps.disabled || false,
     placeholder: getPlaceholder(),
   },
+  ...(formItemType === "textarea" ? { type: "textarea" } : {}),
 };
 
 /* 获取placeholder */

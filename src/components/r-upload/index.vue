@@ -24,9 +24,7 @@ const fileList = computed({
     return props.modelValue;
   },
   set: (val) => {
-    console.log(val,'zlzl');
-    
-    emit("update:modelValue", val);
+    emit("update:modelValue", val || []);
   },
 });
 </script>

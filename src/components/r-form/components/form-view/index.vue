@@ -1,11 +1,17 @@
 <template>
-  <el-form ref="formRef" :model="formData" v-bind="props">
+  <el-form
+    ref="formRef"
+    :model="formData"
+    v-bind="props"
+    :class="[inline && 'inline']"
+  >
     <el-form-item
       :label="item.label"
       v-for="item in fields"
       :key="item.key"
       :prop="item.key"
       :rules="getRules(item)"
+      :class="[item.full && 'full-row']"
     >
       <form-item-slot
         v-if="item.slot"
@@ -27,14 +33,14 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, useSlots } from 'vue';
-import type { RFormCommonProps, RFormViewProps } from '../../index';
-import { ElForm, ElFormItem, FormInstance, FormItemRule } from 'element-plus';
-import formComponent from '../form-component/index.vue';
-import FormItemSlot from '../slot/form-item-slot';
-import RenderSlot from '../slot/render-slot';
+import { watch, ref, useSlots } from "vue";
+import type { RFormCommonProps, RFormViewProps } from "../../index";
+import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
+import formComponent from "../form-component/index.vue";
+import FormItemSlot from "../slot/form-item-slot";
+import RenderSlot from "../slot/render-slot";
 
-type FormDataType = RFormViewProps['formData'];
+type FormDataType = RFormViewProps["formData"];
 
 const props = defineProps<RFormCommonProps>();
 const _formData = ref<FormDataType>({});
@@ -112,4 +118,24 @@ function validate() {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.el-form {
+  &.inline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .el-form-item {
+      width: 320px;
+      &.full-row {
+        width: 100%;
+      }
+
+      .el-select-v2,
+      :deep(.el-autocomplete),
+      .el-input-number {
+        width: 100%;
+      }
+    }
+  }
+}
+</style>
