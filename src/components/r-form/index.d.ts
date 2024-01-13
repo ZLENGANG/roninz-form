@@ -25,6 +25,9 @@ export interface RFormCommonProps {
   /**表单标签宽度 */
   labelWidth?: ElForm["labelWidth"];
 
+  /**内联布局时一行展示列数 */
+  column?: number;
+
   /**表单数据 */
   formData: {
     [key: string]: any;

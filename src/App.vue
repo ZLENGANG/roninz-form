@@ -1,28 +1,40 @@
 <template>
-  <r-form
-    :fields="fieldConfigs"
-    :formData="formData"
-    ref="RRormRef"
-    label-position="top"
+  <div
+    v-if="isShow"
+    style="
+      margin: 0 auto;
+      padding: 20px;
+      boxShadow: var(--el-box-shadow-dark);
+    "
   >
-    <!-- <template v-slot:slot-age2>
+    <r-form
+      :fields="fieldConfigs"
+      :formData="formData"
+      ref="RRormRef"
+      :inline="true"
+      label-position="left"
+      :label-width="100"
+    >
+      <!-- <template v-slot:slot-age2>
       <el-button>click me</el-button>
     </template> -->
 
-    <template #slot-age2>
-      <el-button type="primary">click me</el-button>
-    </template>
-  </r-form>
+      <template #slot-age2>
+        <el-button type="primary">click me</el-button>
+      </template>
+    </r-form>
+  </div>
 
   <el-button type="primary" @click="submit">提交</el-button>
 </template>
 
 <script setup lang="ts">
-import { h, ref } from "vue";
+import { ref } from "vue";
 import { ElButton } from "element-plus";
 
 const formData = ref({});
 const RRormRef = ref<RFormInstance>();
+const isShow = ref(true);
 
 setTimeout(() => {
   formData.value = {
@@ -58,21 +70,21 @@ const fieldConfigs = ref<RFormItemProps[]>([
     },
     events: {},
     compSlots: {
-      prefix() {
-        return h("span", "prefix");
-      },
-      suffix() {
-        return h(
-          ElButton,
-          {
-            type: "primary",
-            onClick() {
-              console.log(formData.value);
-            },
-          },
-          () => "查看"
-        );
-      },
+      // prefix() {
+      //   return h("span", "prefix");
+      // },
+      // suffix() {
+      //   return h(
+      //     ElButton,
+      //     {
+      //       type: "primary",
+      //       onClick() {
+      //         console.log(formData.value);
+      //       },
+      //     },
+      //     () => "查看"
+      //   );
+      // },
     },
   },
   {
@@ -629,7 +641,8 @@ const fieldConfigs = ref<RFormItemProps[]>([
 ]);
 
 function submit() {
-  RRormRef.value?.validate?.();
+  isShow.value = !isShow.value;
+  // RRormRef.value?.validate?.();
   // console.log();
 }
 </script>
