@@ -1,52 +1,55 @@
 <template>
   <div ref="formWrapRef">
-    <el-form
-      ref="formRef"
-      :model="formData"
-      v-bind="props"
-      :class="[inline && 'inline']"
-    >
+    <el-form ref="formRef" :model="formData" v-bind="props">
       <el-row :gutter="20">
-        <el-col :span="computedSpan" v-for="item in fields" :key="item.key">
-          <el-form-item
-            :label="item.label"
-            :prop="item.key"
-            :rules="getRules(item)"
-            :class="[item.full && 'full-row']"
+        <template v-for="item in fields">
+          <el-col
+            v-if="!item.hide"
+            :key="item.key"
+            :span="item.full || !inline ? 24 : computedSpan"
           >
-            <form-item-slot
-              v-if="item.slot"
-              :slots="formItemSlots"
-              :formItem="item"
-              :formData="_formData"
-            />
+            <el-form-item
+              :label="item.label"
+              :prop="item.key"
+              :rules="getRules(item)"
+            >
+              <form-item-slot
+                v-if="item.slot"
+                :slots="formItemSlots"
+                :formItem="item"
+                :formData="_formData"
+              />
 
-            <render-slot v-else-if="item.render" :render="item.render" />
+              <render-slot v-else-if="item.render" :render="item.render" />
 
-            <form-component
-              v-else
-              :form-item="item"
-              :value="_formData[item.key]"
-              @input="handleChangeValue"
-            ></form-component>
-          </el-form-item>
-        </el-col>
+              <form-component
+                v-else
+                :form-item="item"
+                :value="_formData[item.key]"
+                @input="handleChangeValue"
+              ></form-component>
+            </el-form-item>
+          </el-col>
+        </template>
       </el-row>
     </el-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { watch, ref, useSlots, onMounted, onBeforeUnmount } from "vue";
-import type { RFormCommonProps, RFormViewProps } from "../../index";
-import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
-import formComponent from "../form-component/index.vue";
-import FormItemSlot from "../slot/form-item-slot";
-import RenderSlot from "../slot/render-slot";
+import { watch, ref, useSlots, onMounted, onBeforeUnmount } from 'vue';
+import type { RFormCommonProps, RFormViewProps } from '../../index';
+import { ElForm, ElFormItem, FormInstance, FormItemRule } from 'element-plus';
+import formComponent from '../form-component/index.vue';
+import FormItemSlot from '../slot/form-item-slot';
+import RenderSlot from '../slot/render-slot';
 
-type FormDataType = RFormViewProps["formData"];
+type FormDataType = RFormViewProps['formData'];
 
-const props = defineProps<RFormCommonProps>();
+const props = withDefaults(defineProps<RFormCommonProps>(), {
+  inline: true,
+  'label-position': 'top',
+});
 const _formData = ref<FormDataType>({});
 const formItemSlots = useSlots();
 const formRef = ref<FormInstance>();
@@ -71,15 +74,15 @@ watch(
 
 onMounted(() => {
   setComputedSpan();
-  if (!props.column) {
-    window.addEventListener("resize", () => {
+  if (!props.column && props.inline) {
+    window.addEventListener('resize', () => {
       setComputedSpan();
     });
   }
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", () => {});
+  window.removeEventListener('resize', () => {});
 });
 
 /* 设置表单数据 */
@@ -136,6 +139,7 @@ function validate() {
   });
 }
 
+/**设置列数 */
 function setComputedSpan() {
   const formWrapWidth = formWrapRef.value?.clientWidth || 0;
   const computedColumn = Math.floor(formWrapWidth / 500);
@@ -145,9 +149,10 @@ function setComputedSpan() {
 
 <style scoped lang="less">
 .el-form {
-  &.inline {
+  &.el-form--inline {
     .el-form-item {
       width: 100%;
+      margin-right: 0;
     }
   }
 

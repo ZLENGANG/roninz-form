@@ -40,7 +40,7 @@ declare enum CompType {
   textarea,
 
   /**数字输入框 */
-  "input-number",
+  'input-number',
 
   /**单选框 */
   radio,
@@ -67,7 +67,7 @@ declare enum CompType {
   calendar,
 
   /**树形选择 */
-  "tree-select",
+  'tree-select',
 }
 
 /**表单项配置 */
@@ -94,7 +94,7 @@ declare interface RFormItemProps {
   className?: string[];
 
   /**自定义样式对象 */
-  style?: import("vue").StyleValue;
+  style?: import('vue').StyleValue;
 
   /**初始值 */
   initValue?: any;
@@ -109,7 +109,7 @@ declare interface RFormItemProps {
   required?: boolean;
 
   /**字段校验规则 */
-  rules?: import("element-plus").FormItemRule[];
+  rules?: import('element-plus').FormItemRule[];
 
   /**组件属性 */
   props?: any;
@@ -138,5 +138,38 @@ declare type CustomCompType = {
 };
 
 declare type RFormInstance = {
-  validate?: () => Promise<any>;
+  /**校验表单*/
+  validate?: () => Promise<any> | undefined;
+
+  /**
+   * 根据key获取表单项实例
+   * @param key string
+   * @returns RFormItemProps
+   */
+  getFieldConfigByKey?: (key: string) => RFormItemProps | undefined;
+
+  /**
+   * 根据key获取表单项值
+   * @param key string
+   * @returns ModelValue
+   */
+  getFieldValueByKey?: (key: string) => ModelValue;
+
+  /**
+   * 获取表单项配置，不传则获取所有表单项配置
+   * @param keys string[]
+   * @returns ModelValue
+   */
+  getFieldsConfig?: <T extends string[]>(
+    keys?: T
+  ) => { [key in T[number]]: RFormItemProps };
+
+  /**
+   * 获取表单项值，不传则获取所有表单项值
+   * @param keys string[]
+   * @returns ModelValue
+   */
+  getFieldsValue?: <T extends string[]>(
+    keys?: T
+  ) => { [key in T[number]]: ModelValue };
 };
