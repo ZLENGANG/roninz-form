@@ -2,7 +2,7 @@
   <div ref="formWrapRef">
     <el-form ref="formRef" :model="formData" v-bind="props">
       <el-row :gutter="20">
-        <template v-for="item in fields">
+        <template v-for="item in _fields">
           <el-col
             v-if="!item.hide"
             :key="item.key"
@@ -37,24 +37,25 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, useSlots, onMounted, onBeforeUnmount } from 'vue';
-import type { RFormCommonProps, RFormViewProps } from '../../index';
-import { ElForm, ElFormItem, FormInstance, FormItemRule } from 'element-plus';
-import formComponent from '../form-component/index.vue';
-import FormItemSlot from '../slot/form-item-slot';
-import RenderSlot from '../slot/render-slot';
+import { watch, ref, useSlots, onMounted, onBeforeUnmount } from "vue";
+import type { RFormCommonProps, RFormViewProps } from "../../index";
+import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
+import formComponent from "../form-component/index.vue";
+import FormItemSlot from "../slot/form-item-slot";
+import RenderSlot from "../slot/render-slot";
 
-type FormDataType = RFormViewProps['formData'];
+type FormDataType = RFormViewProps["formData"];
 
 const props = withDefaults(defineProps<RFormCommonProps>(), {
   inline: true,
-  'label-position': 'top',
+  "label-position": "top",
 });
 const _formData = ref<FormDataType>({});
 const formItemSlots = useSlots();
 const formRef = ref<FormInstance>();
 const computedSpan = ref(props.column || 24);
 const formWrapRef = ref<HTMLElement>();
+const _fields = ref<RFormItemProps[]>(props.fields);
 
 defineExpose({
   validate,
@@ -72,23 +73,31 @@ watch(
   { deep: true, immediate: true }
 );
 
+watch(
+  () => props.fields,
+  (val) => {
+    _fields.value = val;
+  },
+  { deep: true }
+);
+
 onMounted(() => {
   setComputedSpan();
   if (!props.column && props.inline) {
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       setComputedSpan();
     });
   }
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', () => {});
+  window.removeEventListener("resize", () => {});
 });
 
 /* 设置表单数据 */
 function setFormData(val: FormDataType) {
   const res: FormDataType = {};
-  props.fields.forEach((field) => {
+  _fields.value.forEach((field) => {
     res[field.key] = val[field.key] || field.initValue;
   });
   return res;
@@ -97,7 +106,7 @@ function setFormData(val: FormDataType) {
 /* 获取校验规则 */
 function getRules(item: RFormItemProps) {
   let rules: FormItemRule[] = [];
-  const findItem = props.fields.find((i) => i.key === item.key);
+  const findItem = _fields.value.find((i) => i.key === item.key);
   const requiredItem: FormItemRule = {
     required: true,
     message: `${findItem?.label}不能为空！`,

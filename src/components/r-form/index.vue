@@ -10,10 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import type { RFormProps } from './index';
-import readonlyView from './components/readonly-view/index.vue';
-import formView from './components/form-view/index.vue';
-import { ref, useSlots } from 'vue';
+import type { RFormProps } from "./index";
+import readonlyView from "./components/readonly-view/index.vue";
+import formView from "./components/form-view/index.vue";
+import { ref, useSlots } from "vue";
+import { cloneDeep } from "lodash-es";
 
 const props = withDefaults(defineProps<RFormProps>(), {
   readonly: false,
@@ -26,29 +27,85 @@ const exposeFn: RFormInstance = {
   },
 
   getFieldConfigByKey(key: string) {
-    return props.fields.find((item) => item.key === key);
+    return cloneDeep(props.fields).find((item) => item.key === key);
   },
 
   getFieldValueByKey(key: string) {
-    return props.formData[key];
+    return cloneDeep(props.formData)[key];
   },
 
   getFieldsConfig<T extends string[]>(keys?: T) {
+    const _fields = cloneDeep(props.fields);
+
     let _keys =
-      keys && keys?.length > 0 ? keys : props.fields.map((item) => item.key);
+      keys && keys?.length > 0 ? keys : _fields.map((item) => item.key);
     return _keys.reduce((acc: { [key: string]: any }, key) => {
-      acc[key] = props.fields.find((item) => item.key === key);
+      acc[key] = _fields.find((item) => item.key === key);
       return acc;
     }, {}) as { [key in T[number]]: RFormItemProps };
   },
 
   getFieldsValue<T extends string[]>(keys?: T) {
-    let _keys = keys && keys?.length > 0 ? keys : Object.keys(props.formData);
+    const _formData = cloneDeep(props.formData);
+    let _keys = keys && keys?.length > 0 ? keys : Object.keys(_formData);
 
     return _keys.reduce((acc: { [key: string]: any }, key) => {
-      acc[key] = props.formData[key];
+      acc[key] = _formData[key];
       return acc;
     }, {}) as { [key in T[number]]: ModelValue };
+  },
+
+  setField(
+    param: string | { [key: string]: Partial<RFormItemProps> },
+    config?: Partial<RFormItemProps>
+  ) {
+    if (typeof param === "string") {
+      if (!config) {
+        console.warn("`config` is required.");
+        return;
+      }
+
+      if (config.key) {
+        console.warn("cannot set field `key`");
+        return;
+      }
+
+      props.fields.forEach((item, index) => {
+        if (item.key === param) {
+          props.fields[index] = {
+            ...item,
+            ...config,
+          };
+        }
+      });
+    }
+
+    if (typeof param === "object") {
+      for (let key in param) {
+        if (param[key].key) {
+          console.warn("cannot set field `key`");
+          return;
+        }
+        props.fields.forEach((item, index) => {
+          if (item.key === key) {
+            props.fields[index] = {
+              ...item,
+              ...param[key],
+            };
+          }
+        });
+      }
+    }
+  },
+
+  setFieldValue(param: string | AnyObject, value?: ModelValue) {
+    if (typeof param === "string") {
+      props.formData[param] = value;
+    } else if (typeof param === "object") {
+      for (let key in param) {
+        props.formData[key] = param[key];
+      }
+    }
   },
 };
 

@@ -40,7 +40,7 @@ declare enum CompType {
   textarea,
 
   /**数字输入框 */
-  'input-number',
+  "input-number",
 
   /**单选框 */
   radio,
@@ -67,7 +67,7 @@ declare enum CompType {
   calendar,
 
   /**树形选择 */
-  'tree-select',
+  "tree-select",
 }
 
 /**表单项配置 */
@@ -94,7 +94,7 @@ declare interface RFormItemProps {
   className?: string[];
 
   /**自定义样式对象 */
-  style?: import('vue').StyleValue;
+  style?: import("vue").StyleValue;
 
   /**初始值 */
   initValue?: any;
@@ -109,7 +109,7 @@ declare interface RFormItemProps {
   required?: boolean;
 
   /**字段校验规则 */
-  rules?: import('element-plus').FormItemRule[];
+  rules?: import("element-plus").FormItemRule[];
 
   /**组件属性 */
   props?: any;
@@ -130,6 +130,9 @@ declare interface RFormItemProps {
 }
 
 declare type ModelValue = boolean | string | number | any[];
+declare type AnyObject = {
+  [key: string]: ModelValue;
+};
 
 /**自定义组件类型 */
 declare type CustomCompType = {
@@ -172,4 +175,23 @@ declare type RFormInstance = {
   getFieldsValue?: <T extends string[]>(
     keys?: T
   ) => { [key in T[number]]: ModelValue };
+
+  /**
+   * 设置字段的值
+   * @param key string | AnyObject 字段名
+   * @param value ModelValue 需要设置的值
+   * @returns void
+   */
+  setFieldValue?: (key: string | AnyObject, value?: ModelValue) => void;
+
+  /**
+   * 设置字段
+   * @param key string | AnyObject 字段名
+   * @param config RFormItemProps 需要设置的字段属性
+   * @returns void
+   */
+  setField?: (
+    key: string | { [key: string]: Partial<RFormItemProps> },
+    config?: Partial<RFormItemProps>
+  ) => void;
 };
