@@ -53,9 +53,10 @@ const _formItem = ref(props.formItem);
 
 const _value = computed({
   get: () => {
-    console.log('zlzl', getCurrentInstance()?.appContext.components[curComp]);
-
-    return props.value;
+    const comp = getCurrentInstance()?.appContext.components[curComp] as {
+      defaultValue: ModelValue;
+    };
+    return props.value || comp?.defaultValue;
   },
   set: (val) => {
     handleInput(val);
