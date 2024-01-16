@@ -59,6 +59,12 @@ const _fields = ref<RFormItemProps[]>(props.fields);
 
 defineExpose({
   validate,
+  scrollToField: (key: string) => {
+    formRef.value?.scrollToField(key);
+  },
+  resetFields: () => {
+    formRef.value?.resetFields();
+  },
 });
 
 defineOptions({

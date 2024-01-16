@@ -18,6 +18,8 @@
 
   <el-button type="primary" @click="setFieldValue">设置字段值</el-button>
   <el-button type="primary" @click="setField">设置字段</el-button>
+  <el-button type="primary" @click="scrollToField">跳转到指定字段</el-button>
+  <el-button type="primary" @click="resetFields">重置表单</el-button>
 
   <div
     v-if="isShow"
@@ -59,7 +61,7 @@ setTimeout(() => {
       },
     ],
   };
-}, 200);
+}, 2000);
 
 const fieldConfigs = ref<RFormItemProps[]>([
   {
@@ -716,6 +718,14 @@ function setField() {
       label: '年龄111',
     },
   });
+}
+
+function scrollToField() {
+  RRormRef.value?.scrollToField?.('textarea');
+}
+
+function resetFields() {
+  RRormRef.value?.resetFields?.();
 }
 </script>
 

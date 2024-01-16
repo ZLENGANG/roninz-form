@@ -144,6 +144,12 @@ declare type RFormInstance = {
   /**校验表单*/
   validate?: () => Promise<any> | undefined;
 
+  /**滚动到指定字段*/
+  scrollToField?: (key: string) => void;
+
+  /**重置表单*/
+  resetFields?: () => void;
+
   /**
    * 根据key获取表单项实例
    * @param key string

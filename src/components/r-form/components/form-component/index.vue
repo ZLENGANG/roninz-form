@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, getCurrentInstance, watch } from 'vue';
 import { RFormComponentProps } from '../../index';
 import RenderSlot from '../slot/render-slot';
 
@@ -53,6 +53,8 @@ const _formItem = ref(props.formItem);
 
 const _value = computed({
   get: () => {
+    console.log('zlzl', getCurrentInstance()?.appContext.components[curComp]);
+
     return props.value;
   },
   set: (val) => {

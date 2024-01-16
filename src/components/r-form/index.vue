@@ -26,6 +26,14 @@ const exposeFn: RFormInstance = {
     return formViewRef.value?.validate?.();
   },
 
+  scrollToField(key: string) {
+    formViewRef.value?.scrollToField?.(key);
+  },
+
+  resetFields() {
+    formViewRef.value?.resetFields?.();
+  },
+
   getFieldConfigByKey(key: string) {
     return cloneDeep(props.fields).find((item) => item.key === key);
   },
