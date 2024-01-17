@@ -8,11 +8,16 @@
             :key="item.key"
             :span="item.full || !inline ? 24 : computedSpan"
           >
-            <el-form-item
-              :label="item.label"
-              :prop="item.key"
-              :rules="getRules(item)"
-            >
+            <el-form-item :prop="item.key" :rules="getRules(item)">
+              <template #label>
+                <slot
+                  :name="`label-${item.key}`"
+                  :lable="item.label"
+                  :value="_formData[item.key]"
+                >
+                  <span :title="item.label">{{ item.label }}</span>
+                </slot>
+              </template>
               <form-item-slot
                 v-if="item.slot"
                 :slots="formItemSlots"
@@ -37,18 +42,18 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, useSlots, onMounted, onBeforeUnmount } from 'vue';
-import type { RFormCommonProps, RFormViewProps } from '../../index';
-import { ElForm, ElFormItem, FormInstance, FormItemRule } from 'element-plus';
-import formComponent from '../form-component/index.vue';
-import FormItemSlot from '../slot/form-item-slot';
-import RenderSlot from '../slot/render-slot';
+import { watch, ref, useSlots, onMounted, onBeforeUnmount } from "vue";
+import type { RFormCommonProps, RFormViewProps } from "../../index";
+import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
+import formComponent from "../form-component/index.vue";
+import FormItemSlot from "../slot/form-item-slot";
+import RenderSlot from "../slot/render-slot";
 
-type FormDataType = RFormViewProps['formData'];
+type FormDataType = RFormViewProps["formData"];
 
 const props = withDefaults(defineProps<RFormCommonProps>(), {
   inline: true,
-  'label-position': 'top',
+  "label-position": "top",
 });
 const _formData = ref<FormDataType>({});
 const formItemSlots = useSlots();
@@ -90,14 +95,14 @@ watch(
 onMounted(() => {
   setComputedSpan();
   if (!props.column && props.inline) {
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       setComputedSpan();
     });
   }
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', () => {});
+  window.removeEventListener("resize", () => {});
 });
 
 /* 设置表单数据 */
