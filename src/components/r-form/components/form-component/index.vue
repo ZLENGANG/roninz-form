@@ -13,38 +13,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, getCurrentInstance, watch } from "vue";
-import { RFormComponentProps } from "../../index";
-import RenderSlot from "../slot/render-slot";
+import { computed, ref, getCurrentInstance, watch, inject } from 'vue';
+import type { Component } from 'vue';
 
-const component: { [key in keyof typeof CompType]: string } = {
-  autocomplete: "ElAutocomplete",
-  cascader: "ElCascader",
-  checkbox: "r-checkbox",
-  color: "ElColorPicker",
-  input: "ElInput",
-  textarea: "ElInput",
-  "input-number": "ElInputNumber",
-  select: "ElSelectV2",
-  date: "ElDatePicker",
-  radio: "r-radio",
-  rate: "ElRate",
-  slider: "ElSlider",
-  switch: "ElSwitch",
-  transfer: "ElTransfer",
-  upload: "r-upload",
-  calendar: "ElCalendar",
-  "tree-select": "ElTreeSelect",
-};
+import { RFormComponentProps } from '../../index';
+import RenderSlot from '../slot/render-slot';
+import { formComponents as component, componentPrefix } from '../../../index';
 
-const inputTypeArr = ["input", "autocomplete", "input-number"];
-const chooseTypeArr = ["select", "date", "cascader", "tree-select"];
+const inputTypeArr = ['input', 'autocomplete', 'input-number'];
+const chooseTypeArr = ['select', 'date', 'cascader', 'tree-select'];
 
 const props = defineProps<RFormComponentProps>();
-const emit = defineEmits(["input"]);
+const emit = defineEmits(['input']);
 
 const formItem = props.formItem;
-let curComp = "";
+let curComp: Component = {};
 let _events = formItem.events || {};
 let _compSlots = formItem.compSlots || {};
 let compProps = getCompProps(formItem);
@@ -53,7 +36,9 @@ const _formItem = ref(props.formItem);
 
 const _value = computed({
   get: () => {
-    const comp = getCurrentInstance()?.appContext.components[curComp] as {
+    const comp = getCurrentInstance()?.appContext.components[
+      `${componentPrefix}${getCurCompType(_formItem.value)}`
+    ] as {
       defaultValue: ModelValue;
     };
     return props.value || comp?.defaultValue;
@@ -72,9 +57,17 @@ watch(
   { deep: true }
 );
 
+function getCurCompType(item: RFormItemProps) {
+  return item.type || 'input';
+}
+
 function getCompProps(item: RFormItemProps) {
-  const formItemType = item.type || "input";
-  curComp = component[formItemType];
+  const formItemType = getCurCompType(item);
+  const customerComponents = inject('customerComponents') as {
+    [key: string]: Component;
+  };
+  curComp = component[formItemType] || customerComponents[formItemType];
+
   return {
     ...(item.props || {}),
     ...{
@@ -82,8 +75,8 @@ function getCompProps(item: RFormItemProps) {
       disabled: item.disabled || item.props?.disabled || false,
       placeholder: getPlaceholder(item),
     },
-    ...(formItemType === "textarea"
-      ? { type: "textarea", rows: 3, ...(item.props || {}) }
+    ...(formItemType === 'textarea'
+      ? { type: 'textarea', rows: 3, ...(item.props || {}) }
       : {}),
   };
 }
@@ -107,8 +100,8 @@ function setValueByWatch(val: RFormItemProps) {
 
 /* 获取placeholder */
 function getPlaceholder(item: RFormItemProps) {
-  let defaultPlaceholder = "";
-  const formItemType = item.type || "input";
+  let defaultPlaceholder = '';
+  const formItemType = item.type || 'input';
   if (chooseTypeArr.includes(formItemType)) {
     defaultPlaceholder = `请选择${item.label}`;
   } else if (inputTypeArr.includes(formItemType)) {
@@ -119,9 +112,9 @@ function getPlaceholder(item: RFormItemProps) {
 
 function handleInput(val: ModelValue | Event) {
   if (val instanceof Event) {
-    emit("input", formItem.key, (<HTMLInputElement>val.target).value);
+    emit('input', formItem.key, (<HTMLInputElement>val.target).value);
   } else {
-    emit("input", formItem.key, val);
+    emit('input', formItem.key, val);
   }
 }
 </script>

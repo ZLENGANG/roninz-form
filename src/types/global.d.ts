@@ -40,7 +40,7 @@ declare enum CompType {
   textarea,
 
   /**数字输入框 */
-  "input-number",
+  'input-number',
 
   /**单选框 */
   radio,
@@ -67,7 +67,7 @@ declare enum CompType {
   calendar,
 
   /**树形选择 */
-  "tree-select",
+  'tree-select',
 }
 
 /**表单项配置 */
@@ -79,7 +79,7 @@ declare interface RFormItemProps {
   label: string;
 
   /**表单项类型 */
-  type?: keyof typeof CompType;
+  type?: keyof typeof CompType | string;
 
   /**是否隐藏 */
   hide?: boolean;
@@ -94,7 +94,7 @@ declare interface RFormItemProps {
   className?: string[];
 
   /**自定义样式对象 */
-  style?: import("vue").StyleValue;
+  style?: import('vue').StyleValue;
 
   /**初始值 */
   initValue?: any;
@@ -109,7 +109,7 @@ declare interface RFormItemProps {
   required?: boolean;
 
   /**字段校验规则 */
-  rules?: import("element-plus").FormItemRule[];
+  rules?: import('element-plus').FormItemRule[];
 
   /**组件属性 */
   props?: any;

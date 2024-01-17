@@ -1,16 +1,3 @@
-// import { App, AsyncComponentLoader, defineAsyncComponent } from 'vue';
-// const components = import.meta.glob('./*/index.vue');
-
-// export default function install(app: App) {
-//   for (let key in components) {
-//     const name = key.split('/')[1];
-//     app.component(
-//       name,
-//       defineAsyncComponent(components[key] as AsyncComponentLoader)
-//     );
-//   }
-// }
-
 import { App, Component } from 'vue';
 
 import RCheckbox from './r-checkbox/index.vue';
@@ -18,17 +5,65 @@ import RUpload from './r-upload/index.vue';
 import RForm from './r-form/index.vue';
 import RRadio from './r-radio/index.vue';
 import RTable from './r-table/index.vue';
+import {
+  ElAutocomplete,
+  ElCascader,
+  ElColorPicker,
+  ElInput,
+  ElInputNumber,
+  ElSelectV2,
+  ElDatePicker,
+  ElRate,
+  ElSlider,
+  ElSwitch,
+  ElTransfer,
+  ElCalendar,
+  ElTreeSelect,
+} from 'element-plus';
 
-const components: Record<string, Component> = {
-  'r-checkbox': RCheckbox,
-  'r-upload': RUpload,
-  'r-form': RForm,
-  'r-radio': RRadio,
-  'r-table': RTable,
+const globalComponents: Record<string, Component> = {
+  form: RForm,
+  table: RTable,
 };
 
-export default function install(app: App) {
-  for (let key in components) {
-    app.component(key, components[key]);
-  }
-}
+export const componentPrefix = 'r-';
+
+export const formComponents: Record<keyof typeof CompType, Component> = {
+  checkbox: RCheckbox,
+  upload: RUpload,
+  radio: RRadio,
+
+  autocomplete: ElAutocomplete,
+  cascader: ElCascader,
+  color: ElColorPicker,
+  input: ElInput,
+  textarea: ElInput,
+  'input-number': ElInputNumber,
+  select: ElSelectV2,
+  date: ElDatePicker,
+  rate: ElRate,
+
+  slider: ElSlider,
+  switch: ElSwitch,
+  transfer: ElTransfer,
+  calendar: ElCalendar,
+  'tree-select': ElTreeSelect,
+};
+
+export default {
+  install(app: App, customerComponents: { [key: string]: Component }) {
+    const components = {
+      ...globalComponents,
+      ...formComponents,
+      ...customerComponents,
+    };
+    for (let key in components) {
+      app.component(
+        `${componentPrefix}${key}`,
+        components[key as keyof typeof CompType]
+      );
+    }
+
+    app.provide('customerComponents', customerComponents);
+  },
+};
