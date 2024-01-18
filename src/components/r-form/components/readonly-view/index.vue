@@ -24,15 +24,15 @@
 </template>
 
 <script setup lang="ts">
-import type { RReadonlyViewProps } from "../../index";
-import { watch, ref, StyleValue } from "vue";
+import type { RReadonlyViewProps } from '../../index';
+import { watch, ref, StyleValue, Component } from 'vue';
 
 const { fields, style, formData } = withDefaults(
   defineProps<RReadonlyViewProps>(),
   {
     style() {
       return {
-        "--grid-count": 3,
+        '--grid-count': 3,
       };
     },
     fields: () => [],
@@ -43,14 +43,14 @@ const { fields, style, formData } = withDefaults(
 const form_config = ref<RFormItemProps[]>([]);
 const curSpan = ref(0);
 const innerComponents = [
-  "input",
-  "input-number",
-  "input-money",
-  "textarea",
-  "select",
-  "checkbox",
-  "radio",
-  "date",
+  'input',
+  'input-number',
+  'input-money',
+  'textarea',
+  'select',
+  'checkbox',
+  'radio',
+  'date',
 ];
 
 watch(
@@ -63,9 +63,9 @@ watch(
 
 /* 获取表单配置 */
 function getFormConfig(config: RFormItemProps[] = []) {
-  const count = style["--grid-count"] || 3;
+  const count = style['--grid-count'] || 3;
   const filterConfig = config.filter((item) => !item.hide);
-  const BASE_NAME = "r-form-readonly";
+  const BASE_NAME = 'r-form-readonly';
 
   form_config.value = filterConfig.map((item, index) => {
     const cls = [`${BASE_NAME}-col`, `${BASE_NAME}-${item.key}`];
@@ -105,25 +105,25 @@ function getFormConfig(config: RFormItemProps[] = []) {
 }
 
 /* 判断是否为内置组件 */
-function isInnerComponent(name: string) {
-  return innerComponents.includes(name);
+function isInnerComponent(name: string | Component) {
+  return typeof name === 'string' && innerComponents.includes(name);
 }
 
 /* 格式化表单配置 */
 function formatFormItem(formItem: RFormItemProps) {
   const { type, key, initValue } = formItem;
-  let text = "";
+  let text = '';
   switch (type) {
-    case "input":
-    case "input-number":
+    case 'input':
+    case 'input-number':
       text = formData[key] || initValue;
       break;
 
-    case "select":
+    case 'select':
       text = formatSelect(formItem);
       break;
     default:
-      text = initValue || "-";
+      text = initValue || '-';
   }
 
   return text;
@@ -135,7 +135,7 @@ function formatSelect(formItem: RFormItemProps) {
   const option = config?.options?.find(
     (item: { value: any }) => item.value === value
   );
-  return option?.label || "-";
+  return option?.label || '-';
 }
 </script>
 

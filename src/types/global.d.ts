@@ -79,7 +79,7 @@ declare interface RFormItemProps {
   label: string;
 
   /**表单项类型 */
-  type?: keyof typeof CompType | string;
+  type?: keyof typeof CompType | string | import('vue').Component;
 
   /**是否隐藏 */
   hide?: boolean;

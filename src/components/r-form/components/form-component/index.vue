@@ -66,7 +66,10 @@ function getCompProps(item: RFormItemProps) {
   const customerComponents = inject('customerComponents') as {
     [key: string]: Component;
   };
-  curComp = component[formItemType] || customerComponents[formItemType];
+  curComp =
+    typeof formItemType === 'string'
+      ? component[formItemType] || customerComponents[formItemType]
+      : formItemType;
 
   return {
     ...(item.props || {}),
@@ -102,11 +105,14 @@ function setValueByWatch(val: RFormItemProps) {
 function getPlaceholder(item: RFormItemProps) {
   let defaultPlaceholder = '';
   const formItemType = item.type || 'input';
-  if (chooseTypeArr.includes(formItemType)) {
-    defaultPlaceholder = `请选择${item.label}`;
-  } else if (inputTypeArr.includes(formItemType)) {
-    defaultPlaceholder = `请输入${item.label}`;
+  if (typeof formItemType === 'string') {
+    if (chooseTypeArr.includes(formItemType)) {
+      defaultPlaceholder = `请选择${item.label}`;
+    } else if (inputTypeArr.includes(formItemType)) {
+      defaultPlaceholder = `请输入${item.label}`;
+    }
   }
+
   return item.placeholder || item.props?.placeholder || defaultPlaceholder;
 }
 

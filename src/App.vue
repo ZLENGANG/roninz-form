@@ -651,7 +651,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
   {
     key: 'test',
     label: '测试',
-    type: 'test',
+    // type: Test,
   },
   {
     key: 'textarea',

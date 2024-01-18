@@ -28,30 +28,31 @@ const globalComponents: Record<string, Component> = {
 
 export const componentPrefix = 'r-';
 
-export const formComponents: Record<keyof typeof CompType, Component> = {
-  checkbox: RCheckbox,
-  upload: RUpload,
-  radio: RRadio,
+export const formComponents: Record<keyof typeof CompType | string, Component> =
+  {
+    checkbox: RCheckbox,
+    upload: RUpload,
+    radio: RRadio,
 
-  autocomplete: ElAutocomplete,
-  cascader: ElCascader,
-  color: ElColorPicker,
-  input: ElInput,
-  textarea: ElInput,
-  'input-number': ElInputNumber,
-  select: ElSelectV2,
-  date: ElDatePicker,
-  rate: ElRate,
+    autocomplete: ElAutocomplete,
+    cascader: ElCascader,
+    color: ElColorPicker,
+    input: ElInput,
+    textarea: ElInput,
+    'input-number': ElInputNumber,
+    select: ElSelectV2,
+    date: ElDatePicker,
+    rate: ElRate,
 
-  slider: ElSlider,
-  switch: ElSwitch,
-  transfer: ElTransfer,
-  calendar: ElCalendar,
-  'tree-select': ElTreeSelect,
-};
+    slider: ElSlider,
+    switch: ElSwitch,
+    transfer: ElTransfer,
+    calendar: ElCalendar,
+    'tree-select': ElTreeSelect,
+  };
 
 export default {
-  install(app: App, customerComponents: { [key: string]: Component }) {
+  install(app: App, customerComponents: { [key: string]: Component } = {}) {
     const components = {
       ...globalComponents,
       ...formComponents,
