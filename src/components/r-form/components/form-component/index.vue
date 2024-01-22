@@ -16,7 +16,7 @@
 import { computed, ref, getCurrentInstance, watch, inject } from 'vue';
 import type { Component } from 'vue';
 
-import { RFormComponentProps } from '../../index';
+import { RFormComponentProps, RFormItemProps } from '../../index';
 import RenderSlot from '../slot/render-slot';
 import { formComponents as component, componentPrefix } from '../../../index';
 

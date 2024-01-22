@@ -22,14 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type { RadioProps, RadioButtonProps } from 'element-plus';
-
-type RRadioProps = {
-  options: (RadioProps & RadioButtonProps & { value: ModelValue })[];
-  type?: 'button' | 'group';
-  border?: boolean;
-};
-
+import type { RRadioProps } from './index';
 withDefaults(defineProps<RRadioProps>(), {
   type: 'group',
 });

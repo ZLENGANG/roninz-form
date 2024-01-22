@@ -44,6 +44,7 @@
 <script setup lang="ts">
 import { ref, h } from 'vue';
 import { ElButton } from 'element-plus';
+import { RFormInstance, RFormItemProps } from '@/types';
 
 const formData = ref({});
 const RRormRef = ref<RFormInstance>();

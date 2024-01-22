@@ -1,10 +1,10 @@
-import RForm from "../components/r-form/index.vue";
-import RTable from "../components/r-table/index.vue";
-import RRadio from "../components/r-radio/index.vue";
-import RCheckbox from "../components/r-checkbox/index.vue";
-import RUpload from "../components/r-upload/index.vue";
+import RForm from '../components/r-form/index.vue';
+import RTable from '../components/r-table/index.vue';
+import RRadio from '../components/r-radio/index.vue';
+import RCheckbox from '../components/r-checkbox/index.vue';
+import RUpload from '../components/r-upload/index.vue';
 
-declare module "@vue/runtime-core" {
+declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     RForm: typeof RForm;
     RTable: typeof RTable;
@@ -13,3 +13,9 @@ declare module "@vue/runtime-core" {
     RUpload: typeof RUpload;
   }
 }
+
+export * from '../components/r-form';
+export * from '../components/r-table';
+export * from '../components/r-checkbox';
+export * from '../components/r-upload';
+export * from '../components/r-radio';

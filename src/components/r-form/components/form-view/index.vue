@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { watch, ref, useSlots, onMounted, onBeforeUnmount } from "vue";
-import type { RFormCommonProps, RFormViewProps } from "../../index";
+import type { RFormCommonProps, RFormItemProps, RFormViewProps } from "../../index";
 import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
 import formComponent from "../form-component/index.vue";
 import FormItemSlot from "../slot/form-item-slot";

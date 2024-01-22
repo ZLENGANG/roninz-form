@@ -28,4 +28,13 @@ export default defineConfig({
       },
     }, // rollup打包配置
   },
+
+  resolve: {
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve('./src'),
+      },
+    ],
+  },
 });

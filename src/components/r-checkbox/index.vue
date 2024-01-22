@@ -22,14 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CheckboxProps } from 'element-plus';
-
-type RCheckboxProps = {
-  options: (CheckboxProps & { value: ModelValue })[];
-  type?: 'button' | 'group';
-  border?: boolean;
-};
-
+import { RCheckboxProps } from '@/types';
 withDefaults(defineProps<RCheckboxProps>(), {
   type: 'group',
 });

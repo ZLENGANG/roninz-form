@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type { RReadonlyViewProps } from '../../index';
+import type { RFormItemProps, RReadonlyViewProps } from '../../index';
 import { watch, ref, StyleValue, Component } from 'vue';
 
 const { fields, style, formData } = withDefaults(
@@ -67,6 +67,7 @@ function getFormConfig(config: RFormItemProps[] = []) {
   const filterConfig = config.filter((item) => !item.hide);
   const BASE_NAME = 'r-form-readonly';
 
+  // @ts-ignore
   form_config.value = filterConfig.map((item, index) => {
     const cls = [`${BASE_NAME}-col`, `${BASE_NAME}-${item.key}`];
     const { span = 0, full, className = [] } = item;
@@ -101,7 +102,6 @@ function getFormConfig(config: RFormItemProps[] = []) {
       ...item,
     };
   });
-  console.log(form_config.value, count);
 }
 
 /* 判断是否为内置组件 */
