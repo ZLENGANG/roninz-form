@@ -20,7 +20,7 @@ import {
   ElCalendar,
   ElTreeSelect,
 } from 'element-plus';
-import { CompType } from '@/types';
+import { CompType } from './r-form/index';
 
 const globalComponents: Record<string, Component> = {
   form: RForm,
