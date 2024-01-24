@@ -13,9 +13,3 @@ declare module '@vue/runtime-core' {
     RUpload: typeof RUpload;
   }
 }
-
-export * from '../components/r-form';
-export * from '../components/r-table';
-export * from '../components/r-checkbox';
-export * from '../components/r-upload';
-export * from '../components/r-radio';

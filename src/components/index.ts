@@ -20,7 +20,7 @@ import {
   ElCalendar,
   ElTreeSelect,
 } from 'element-plus';
-import { CompType } from '@/types';
+import type { CompType } from './r-form';
 
 const globalComponents: Record<string, Component> = {
   form: RForm,
@@ -52,7 +52,7 @@ export const formComponents: Record<keyof typeof CompType | string, Component> =
     'tree-select': ElTreeSelect,
   };
 
-export default {
+const RoninzForm = {
   install(app: App, customerComponents: { [key: string]: Component } = {}) {
     const components = {
       ...globalComponents,
@@ -69,3 +69,5 @@ export default {
     app.provide('customerComponents', customerComponents);
   },
 };
+
+export default RoninzForm;

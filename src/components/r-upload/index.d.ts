@@ -1,4 +1,4 @@
-import type { CustomCompType } from '@/types';
+import type { CustomCompType } from '../r-form/index';
 
 export type RUploadType = {
   modelValue: ModelValue;

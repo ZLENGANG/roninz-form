@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { computed, defineOptions } from 'vue';
 import RenderSlot from '../r-form/components/slot/render-slot';
-import type { RUploadType } from '@/types';
+import type { RUploadType } from './index';
 
 const props = defineProps<RUploadType>();
 const compSlots = props.fieldConfig.compSlots || {};
