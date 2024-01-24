@@ -24,6 +24,7 @@
   "dependencies": {
     "element-plus": "^2.4.4",
     "lodash": "^4.17.21",
+    "vite-plugin-dts": "^3.7.1",
     "vue": "^3.3.11"
   },
   "devDependencies": {
