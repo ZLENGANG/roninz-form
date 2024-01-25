@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type { RFormInstance, RFormItemProps, RFormProps } from './index';
+import type { RFormInstance, RFormItemProps, RFormProps } from './type';
 import readonlyView from './components/readonly-view/index.vue';
 import formView from './components/form-view/index.vue';
 import { ref, useSlots } from 'vue';

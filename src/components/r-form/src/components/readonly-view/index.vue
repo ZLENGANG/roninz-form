@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type { RFormItemProps, RReadonlyViewProps } from '../../index';
+import type { RFormItemProps, RReadonlyViewProps } from '../../../index';
 import { watch, ref, StyleValue, Component } from 'vue';
 
 const { fields, style, formData } = withDefaults(

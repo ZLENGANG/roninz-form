@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { RTableProps } from './index';
+import { RTableProps } from './type';
 withDefaults(defineProps<RTableProps>(), {
   readOnly: false,
 });

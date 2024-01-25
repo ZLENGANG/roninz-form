@@ -1,8 +1,9 @@
-import type { ElForm, FormRules } from 'element-plus';
+import { ElForm } from "element-plus";
+import { Component } from "vue";
 
 type GridCount = {
   /** 一行列数 */
-  '--grid-count'?: number;
+  "--grid-count"?: number;
 };
 
 /**通用表单属性 */
@@ -11,19 +12,16 @@ export interface RFormCommonProps {
   style?: Partial<CSSStyleDeclaration> & GridCount;
 
   /**表单尺寸 */
-  size?: ElForm['size'];
-
-  /**表单验证规则 */
-  // rules?: FormRules;
+  size?: (typeof ElForm)["size"];
 
   /**是否内联布局 */
-  inline?: ElForm['inline'];
+  inline?: (typeof ElForm)["inline"];
 
   /**表单标签位置 */
-  'label-position'?: ElForm['labelPosition'];
+  "label-position"?: (typeof ElForm)["labelPosition"];
 
   /**表单标签宽度 */
-  labelWidth?: ElForm['labelWidth'];
+  labelWidth?: (typeof ElForm)["labelWidth"];
 
   /**内联布局时一行展示列数 */
   column?: number;
@@ -91,7 +89,7 @@ export enum CompType {
   textarea,
 
   /**数字输入框 */
-  'input-number',
+  "input-number",
 
   /**单选框 */
   radio,
@@ -118,7 +116,7 @@ export enum CompType {
   calendar,
 
   /**树形选择 */
-  'tree-select',
+  "tree-select",
 }
 
 /**表单项配置 */
@@ -130,7 +128,7 @@ export interface RFormItemProps {
   label: string;
 
   /**表单项类型 */
-  type?: keyof typeof CompType | string | import('vue').Component;
+  type?: keyof typeof CompType | string | import("vue").Component;
 
   /**是否隐藏 */
   hide?: boolean;
@@ -145,7 +143,7 @@ export interface RFormItemProps {
   className?: string[];
 
   /**自定义样式对象 */
-  style?: import('vue').StyleValue;
+  style?: import("vue").StyleValue;
 
   /**初始值 */
   initValue?: any;
@@ -160,7 +158,7 @@ export interface RFormItemProps {
   required?: boolean;
 
   /**字段校验规则 */
-  rules?: import('element-plus').FormItemRule[];
+  rules?: import("element-plus").FormItemRule[];
 
   /**组件属性 */
   props?: any;
@@ -254,3 +252,5 @@ export type CustomCompType = {
   /**字段配置 */
   fieldConfig: RFormItemProps;
 };
+
+export type FormComponents = Record<keyof typeof CompType | string, Component>;

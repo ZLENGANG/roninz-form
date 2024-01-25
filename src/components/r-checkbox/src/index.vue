@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { RCheckboxProps } from './index';
+import { RCheckboxProps } from './type';
 withDefaults(defineProps<RCheckboxProps>(), {
   type: 'group',
 });

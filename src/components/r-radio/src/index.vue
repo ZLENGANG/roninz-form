@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import type { RRadioProps } from './index';
+import type { RRadioProps } from "./type";
 withDefaults(defineProps<RRadioProps>(), {
-  type: 'group',
+  type: "group",
 });
 </script>
 

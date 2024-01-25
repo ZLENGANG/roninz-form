@@ -1,8 +1,8 @@
-import RForm from '../components/r-form/index.vue';
-import RTable from '../components/r-table/index.vue';
-import RRadio from '../components/r-radio/index.vue';
-import RCheckbox from '../components/r-checkbox/index.vue';
-import RUpload from '../components/r-upload/index.vue';
+import RForm from '../components/r-form/index';
+import RTable from '../components/r-table/index';
+import RRadio from '../components/r-radio/index';
+import RCheckbox from '../components/r-checkbox/index';
+import RUpload from '../components/r-upload/index';
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {

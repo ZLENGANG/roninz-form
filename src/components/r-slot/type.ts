@@ -1,4 +1,4 @@
-import { RFormCommonProps, RFormItemProps } from '../..';
+import { RFormCommonProps, RFormItemProps } from '../r-form';
 
 export interface FormItemSlotProps {
   /**表单项配置 */

@@ -43,11 +43,15 @@
 
 <script setup lang="ts">
 import { watch, ref, useSlots, onMounted, onBeforeUnmount } from "vue";
-import type { RFormCommonProps, RFormItemProps, RFormViewProps } from "../../index";
+import type {
+  RFormCommonProps,
+  RFormItemProps,
+  RFormViewProps,
+} from "../../../index";
 import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
 import formComponent from "../form-component/index.vue";
-import FormItemSlot from "../slot/form-item-slot";
-import RenderSlot from "../slot/render-slot";
+import FormItemSlot from "../../../../r-slot/form-item-slot";
+import RenderSlot from "../../../../r-slot/render-slot";
 
 type FormDataType = RFormViewProps["formData"];
 

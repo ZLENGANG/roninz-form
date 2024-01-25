@@ -16,8 +16,8 @@
 import { computed, ref, getCurrentInstance, watch, inject } from 'vue';
 import type { Component } from 'vue';
 
-import { RFormComponentProps, RFormItemProps } from '../../index';
-import RenderSlot from '../slot/render-slot';
+import { RFormComponentProps, RFormItemProps } from '../../type';
+import RenderSlot from '../../../../r-slot/render-slot';
 import { formComponents as component, componentPrefix } from '../../../index';
 
 const inputTypeArr = ['input', 'autocomplete', 'input-number'];

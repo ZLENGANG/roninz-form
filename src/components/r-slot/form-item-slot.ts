@@ -1,5 +1,5 @@
 import { defineComponent, useAttrs, h } from 'vue';
-import { FormItemSlotProps } from '.';
+import { FormItemSlotProps } from './type';
 
 export default defineComponent<FormItemSlotProps>({
   name: 'FormItemSlot',
