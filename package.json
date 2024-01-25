@@ -1,19 +1,31 @@
 {
   "name": "roninz-form",
   "private": false,
-  "version": "0.0.16",
+  "version": "0.0.18",
   "type": "module",
+  "author": "Roninz <1437004632@qq.com.com>",
+  "license": "MIT",
+  "description": "基于element-plus的数据驱动表单组件，常用于可视化项目或表单较多的中台项目",
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZLENGANG/roninz-form"
+  },
   "main": "./dist/roninz-form.umd.cjs",
   "module": "./dist/roninz-form.js",
-  "typings": "./dist/index.d.ts",
   "exports": {
     "./css": "./dist/style.css",
     ".": {
-      "import": "./dist/roninz-form.js",
-      "require": "./dist/roninz-form.umd.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/roninz-form.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/roninz-form.umd.cjs"
+      }
     }
   },
   "scripts": {
