@@ -1,31 +1,11 @@
-import { App, Component } from "vue";
+import RoninzForm from "./installer";
 
-import RForm, { componentPrefix, formComponents, CompType } from "./r-form";
-import RTable from "./r-table";
+// 导出组件
+export * from "./installer";
 
-const globalComponents: Record<string, Component> = {
-  form: RForm,
-  table: RTable,
-};
-
-const RoninzForm = {
-  install(app: App, customerComponents: { [key: string]: Component } = {}) {
-    const components = {
-      ...globalComponents,
-      ...formComponents,
-      ...customerComponents,
-    };
-    for (let key in components) {
-      app.component(
-        `${componentPrefix}${key}`,
-        components[key as keyof typeof CompType]
-      );
-    }
-
-    app.provide("customerComponents", customerComponents);
-  },
-};
-
-export default RoninzForm;
+// 导出类型
 export * from "./r-form";
 export * from "./r-table";
+
+// 导出组件库
+export default RoninzForm;

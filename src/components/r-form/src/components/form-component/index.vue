@@ -13,18 +13,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, getCurrentInstance, watch, inject } from 'vue';
-import type { Component } from 'vue';
+import { computed, ref, getCurrentInstance, watch, inject } from "vue";
+import type { Component } from "vue";
 
-import { RFormComponentProps, RFormItemProps } from '../../type';
-import RenderSlot from '../../../../r-slot/render-slot';
-import { formComponents as component, componentPrefix } from '../../../index';
+import { RFormComponentProps, RFormItemProps } from "../../type";
+import RenderSlot from "../../../../r-slot/render-slot";
+import { innerComponents as component, componentPrefix } from "../../../index";
 
-const inputTypeArr = ['input', 'autocomplete', 'input-number'];
-const chooseTypeArr = ['select', 'date', 'cascader', 'tree-select'];
+const inputTypeArr = ["input", "autocomplete", "input-number"];
+const chooseTypeArr = ["select", "date", "cascader", "tree-select"];
 
 const props = defineProps<RFormComponentProps>();
-const emit = defineEmits(['input']);
+const emit = defineEmits(["input"]);
 
 const formItem = props.formItem;
 let curComp: Component = {};
@@ -37,6 +37,7 @@ const _formItem = ref(props.formItem);
 const _value = computed({
   get: () => {
     const comp = getCurrentInstance()?.appContext.components[
+      // @ts-ignore
       `${componentPrefix}${getCurCompType(_formItem.value)}`
     ] as {
       defaultValue: ModelValue;
@@ -58,16 +59,16 @@ watch(
 );
 
 function getCurCompType(item: RFormItemProps) {
-  return item.type || 'input';
+  return item.type || "input";
 }
 
 function getCompProps(item: RFormItemProps) {
   const formItemType = getCurCompType(item);
-  const customerComponents = inject('customerComponents') as {
+  const customerComponents = inject("customerComponents") as {
     [key: string]: Component;
   };
   curComp =
-    typeof formItemType === 'string'
+    typeof formItemType === "string"
       ? component[formItemType] || customerComponents[formItemType]
       : formItemType;
 
@@ -78,8 +79,8 @@ function getCompProps(item: RFormItemProps) {
       disabled: item.disabled || item.props?.disabled || false,
       placeholder: getPlaceholder(item),
     },
-    ...(formItemType === 'textarea'
-      ? { type: 'textarea', rows: 3, ...(item.props || {}) }
+    ...(formItemType === "textarea"
+      ? { type: "textarea", rows: 3, ...(item.props || {}) }
       : {}),
   };
 }
@@ -103,9 +104,9 @@ function setValueByWatch(val: RFormItemProps) {
 
 /* 获取placeholder */
 function getPlaceholder(item: RFormItemProps) {
-  let defaultPlaceholder = '';
-  const formItemType = item.type || 'input';
-  if (typeof formItemType === 'string') {
+  let defaultPlaceholder = "";
+  const formItemType = item.type || "input";
+  if (typeof formItemType === "string") {
     if (chooseTypeArr.includes(formItemType)) {
       defaultPlaceholder = `请选择${item.label}`;
     } else if (inputTypeArr.includes(formItemType)) {
@@ -118,9 +119,9 @@ function getPlaceholder(item: RFormItemProps) {
 
 function handleInput(val: ModelValue | Event) {
   if (val instanceof Event) {
-    emit('input', formItem.key, (<HTMLInputElement>val.target).value);
+    emit("input", formItem.key, (<HTMLInputElement>val.target).value);
   } else {
-    emit('input', formItem.key, val);
+    emit("input", formItem.key, val);
   }
 }
 </script>

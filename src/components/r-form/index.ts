@@ -20,7 +20,7 @@ import {
   ElTreeSelect,
 } from "element-plus";
 
-export const formComponents: FormComponents = {
+export const innerComponents: FormComponents = {
   checkbox: RCheckbox,
   upload: RUpload,
   radio: RRadio,
