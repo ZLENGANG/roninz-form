@@ -115,6 +115,9 @@ const fieldConfigs = ref<RFormItemProps[]>([
     key: "age1",
     label: "年龄",
     type: "input",
+    disabled(arg0) {
+      return arg0.rate ===3;
+    },
     // render() {
     //   return h(
     //     ElButton,
@@ -653,6 +656,12 @@ const fieldConfigs = ref<RFormItemProps[]>([
     key: "test",
     label: "测试",
     // type: Test,
+    disabled(data) {
+      return data.textarea === "2";
+    },
+    hide(arg0) {
+      return arg0.textarea === "22";
+    },
   },
   {
     key: "textarea",

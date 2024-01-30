@@ -5,6 +5,7 @@
     v-on="_events"
     v-model="_value"
     :field-config="_formItem"
+    :disabled="props.disabled"
   >
     <template v-for="(render, key) of _compSlots" v-slot:[key]="data">
       <render-slot :key="key" :render="render" :data="data" />
@@ -76,7 +77,6 @@ function getCompProps(item: RFormItemProps) {
     ...(item.props || {}),
     ...{
       options: item.options || item.props?.options || [],
-      disabled: item.disabled || item.props?.disabled || false,
       placeholder: getPlaceholder(item),
     },
     ...(formItemType === "textarea"

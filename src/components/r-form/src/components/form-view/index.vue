@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <template v-for="item in _fields">
           <el-col
-            v-if="!item.hide"
+            v-if="!isHide(item)"
             :key="item.key"
             :span="item.full || !inline ? 24 : computedSpan"
           >
@@ -31,6 +31,8 @@
                 v-else
                 :form-item="item"
                 :value="_formData[item.key]"
+                :form-data="_formData"
+                :disabled="isDisabled(item)"
                 @input="handleChangeValue"
               ></form-component>
             </el-form-item>
@@ -64,7 +66,7 @@ const formItemSlots = useSlots();
 const formRef = ref<FormInstance>();
 const computedSpan = ref(props.column || 24);
 const formWrapRef = ref<HTMLElement>();
-const _fields = ref<RFormItemProps[]>(props.fields);
+const _fields = ref<RFormItemProps[]>([]);
 
 defineExpose({
   validate,
@@ -93,7 +95,7 @@ watch(
   (val) => {
     _fields.value = val;
   },
-  { deep: true }
+  { deep: true, immediate: true }
 );
 
 onMounted(() => {
@@ -121,6 +123,7 @@ function setFormData(val: FormDataType) {
 /* 获取校验规则 */
 function getRules(item: RFormItemProps) {
   let rules: FormItemRule[] = [];
+  // @ts-ignore
   const findItem = _fields.value.find((i) => i.key === item.key);
   const requiredItem: FormItemRule = {
     required: true,
@@ -141,6 +144,28 @@ function getRules(item: RFormItemProps) {
     }
   }
   return rules;
+}
+
+function isHide(item: RFormItemProps) {
+  if (typeof item.hide === "boolean") {
+    return item.hide;
+  }
+  if (typeof item.hide === "function") {
+    return item.hide(_formData.value);
+  }
+  return false;
+}
+
+function isDisabled(item: RFormItemProps) {
+  if (typeof item.disabled === "boolean") {
+    return item.disabled;
+  }
+
+  if (typeof item.disabled === "function") {
+    return item.disabled(_formData.value);
+  }
+
+  return item.props?.disabled || false;
 }
 
 /**处理表单数据 */

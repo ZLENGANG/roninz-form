@@ -131,7 +131,7 @@ export interface RFormItemProps {
   type?: keyof typeof CompType | string | import("vue").Component;
 
   /**是否隐藏 */
-  hide?: boolean;
+  hide?: boolean | ((arg0: AnyObject) => boolean);
 
   /**栅格占位格数 */
   span?: number;
@@ -149,7 +149,7 @@ export interface RFormItemProps {
   initValue?: any;
 
   /**是否禁用 */
-  disabled?: boolean;
+  disabled?: boolean | ((arg0: AnyObject) => boolean);
 
   /**下拉框等选项配置 */
   options?: any[];
@@ -182,6 +182,8 @@ export interface RFormItemProps {
 export interface RFormComponentProps {
   value: any;
   formItem: RFormItemProps;
+  formData: AnyObject;
+  disabled: boolean;
 }
 
 /**表单实例 */

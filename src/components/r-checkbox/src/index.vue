@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { RCheckboxProps } from "./type";
-import { ElCheckboxButton, ElCheckboxGroup } from "element-plus";
+import { ElCheckboxButton, ElCheckboxGroup, ElCheckbox } from "element-plus";
 withDefaults(defineProps<RCheckboxProps>(), {
   type: "group",
 });
