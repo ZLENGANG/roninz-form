@@ -10,15 +10,16 @@
 </template>
 
 <script setup lang="ts">
-import type { RFormInstance, RFormItemProps, RFormProps } from './type';
-import readonlyView from './components/readonly-view/index.vue';
-import formView from './components/form-view/index.vue';
-import { ref, useSlots } from 'vue';
-import { cloneDeep } from 'lodash-es';
+import type { RFormInstance, RFormItemProps, RFormProps } from "./type";
+import readonlyView from "./components/readonly-view/index.vue";
+import formView from "./components/form-view/index.vue";
+import { ref, useSlots } from "vue";
+import { cloneDeep } from "lodash-es";
 
 const props = withDefaults(defineProps<RFormProps>(), {
   readonly: false,
 });
+
 const formViewRef = ref<RFormInstance>();
 
 const exposeFn: RFormInstance = {
@@ -67,14 +68,14 @@ const exposeFn: RFormInstance = {
     param: string | { [key: string]: Partial<RFormItemProps> },
     config?: Partial<RFormItemProps>
   ) {
-    if (typeof param === 'string') {
+    if (typeof param === "string") {
       if (!config) {
-        console.warn('`config` is required.');
+        console.warn("`config` is required.");
         return;
       }
 
       if (config.key) {
-        console.warn('cannot set field `key`');
+        console.warn("cannot set field `key`");
         return;
       }
 
@@ -88,10 +89,10 @@ const exposeFn: RFormInstance = {
       });
     }
 
-    if (typeof param === 'object') {
+    if (typeof param === "object") {
       for (let key in param) {
         if (param[key].key) {
-          console.warn('cannot set field `key`');
+          console.warn("cannot set field `key`");
           return;
         }
         props.fields.forEach((item, index) => {
@@ -107,9 +108,9 @@ const exposeFn: RFormInstance = {
   },
 
   setFieldValue(param: string | AnyObject, value?: ModelValue) {
-    if (typeof param === 'string') {
+    if (typeof param === "string") {
       props.formData[param] = value;
-    } else if (typeof param === 'object') {
+    } else if (typeof param === "object") {
       for (let key in param) {
         props.formData[key] = param[key];
       }

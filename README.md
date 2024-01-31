@@ -9,6 +9,7 @@ roninz-form 是基于 [element-plus form](https://element-plus.org/zh-CN/compone
 - 表单布局和响应式表单
 - 联动显示/隐藏、启用/禁用、重新获取 options 值
 - 可以通过插槽自定义表单项;
+- 可自定义组件，扩展性强
 
 而上面所说的一切只需要一行 html 和 数据即可实现, 即保证了质量, 又使得开发速度仿佛坐上 🚀!
 

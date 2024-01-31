@@ -19,8 +19,11 @@ import type { Component } from "vue";
 
 import { RFormComponentProps, RFormItemProps } from "../../type";
 import RenderSlot from "../../../../r-slot/render-slot";
-import { innerComponents as component, componentPrefix } from "../../../index";
+import { innerComponents, componentPrefix } from "../../../index";
 
+const customerComponents = inject("customerComponents") as {
+  [key: string]: Component;
+};
 const inputTypeArr = ["input", "autocomplete", "input-number"];
 const chooseTypeArr = ["select", "date", "cascader", "tree-select"];
 
@@ -65,24 +68,30 @@ function getCurCompType(item: RFormItemProps) {
 
 function getCompProps(item: RFormItemProps) {
   const formItemType = getCurCompType(item);
-  const customerComponents = inject("customerComponents") as {
-    [key: string]: Component;
-  };
+
   curComp =
     typeof formItemType === "string"
-      ? component[formItemType] || customerComponents[formItemType]
+      ? innerComponents[formItemType] || customerComponents[formItemType]
       : formItemType;
 
-  return {
+  let optionsObj = {};
+  if (
+    typeof formItemType === "string" &&
+    ["select", "radio", "checkbox", "cascader"].includes(formItemType)
+  ) {
+    optionsObj = { options: item.options || item.props?.options || [] };
+  }
+
+  const compProps = {
     ...(item.props || {}),
-    ...{
-      options: item.options || item.props?.options || [],
-      placeholder: getPlaceholder(item),
-    },
+    ...getInnerCompPlaceholder(item),
+    ...optionsObj,
     ...(formItemType === "textarea"
       ? { type: "textarea", rows: 3, ...(item.props || {}) }
       : {}),
   };
+
+  return compProps;
 }
 
 function setValueByWatch(val: RFormItemProps) {
@@ -103,9 +112,10 @@ function setValueByWatch(val: RFormItemProps) {
 }
 
 /* 获取placeholder */
-function getPlaceholder(item: RFormItemProps) {
+function getInnerCompPlaceholder(item: RFormItemProps) {
   let defaultPlaceholder = "";
   const formItemType = item.type || "input";
+  let placeholderObj = {};
   if (typeof formItemType === "string") {
     if (chooseTypeArr.includes(formItemType)) {
       defaultPlaceholder = `请选择${item.label}`;
@@ -114,7 +124,15 @@ function getPlaceholder(item: RFormItemProps) {
     }
   }
 
-  return item.placeholder || item.props?.placeholder || defaultPlaceholder;
+  const innerComps = Object.keys(innerComponents);
+  if (typeof formItemType === "string" && innerComps.includes(formItemType)) {
+    placeholderObj = {
+      placeholder:
+        item.placeholder || item.props?.placeholder || defaultPlaceholder,
+    };
+  }
+
+  return placeholderObj;
 }
 
 function handleInput(val: ModelValue | Event) {

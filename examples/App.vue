@@ -65,14 +65,16 @@ setTimeout(() => {
         url: "https://element-plus.org/images/element-plus-logo.svg",
       },
     ],
+    // "m-select": "3",
   };
-}, 2000);
+}, 0);
 
 const fieldConfigs = ref<RFormItemProps[]>([
   {
     key: "name",
     label: "姓名",
     required: true,
+    initValue: "zl",
     rules: [
       // {
       //   required: true,
@@ -110,13 +112,15 @@ const fieldConfigs = ref<RFormItemProps[]>([
     label: "年龄",
     type: "input",
     hide: true,
+    initValue: 26,
   },
   {
     key: "age1",
     label: "年龄",
     type: "input",
+    initValue: 26,
     disabled(arg0) {
-      return arg0.rate ===3;
+      return arg0.rate === 3;
     },
     // render() {
     //   return h(
@@ -135,6 +139,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     key: "age2",
     label: "年龄",
     type: "input",
+    initValue: 26,
     // slot: "slot-age2",
     required: true,
   },
@@ -159,6 +164,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     ],
     props: {},
     events: {},
+    initValue: "n1",
   },
   {
     key: "searchSuggest",
@@ -174,6 +180,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
         cb(arr.filter((item) => item.value.indexOf(q) > -1));
       },
     },
+    initValue: "vue",
   },
   {
     key: "input-number",
@@ -181,6 +188,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     type: "input-number",
     required: true,
     props: {},
+    initValue: 4,
   },
 
   {
@@ -188,6 +196,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     label: "日期选择",
     type: "date",
     required: true,
+    initValue: "2020-10-10",
   },
 
   {
@@ -196,6 +205,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     type: "rate",
     required: true,
     props: {},
+    initValue: 5,
   },
   {
     key: "radio",
@@ -214,6 +224,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
       // disabled: true,
       // type: 'button',
     },
+    initValue: "n1",
   },
 
   {
@@ -224,6 +235,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     props: {
       "show-input": true,
     },
+    initValue: 30,
   },
 
   {
@@ -235,6 +247,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
       "active-text": "是",
       "inactive-text": "否",
     },
+    initValue: true,
   },
 
   {
@@ -511,6 +524,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
         ],
       },
     ],
+    initValue: "consistency",
   },
 
   {
@@ -526,6 +540,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
       // type: 'button',
       border: true,
     },
+    initValue: ["en"],
   },
 
   {
@@ -533,6 +548,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     label: "颜色选择",
     type: "color",
     required: true,
+    initValue: "#eee",
   },
 
   {
@@ -612,46 +628,46 @@ const fieldConfigs = ref<RFormItemProps[]>([
         },
       ],
     },
+    initValue: "2-1",
   },
 
-  {
-    key: "transfer",
-    label: "穿梭框",
-    type: "transfer",
-    required: true,
-    full: true,
-    props: {
-      data: (() => {
-        const data = [];
-        for (let i = 1; i <= 15; i++) {
-          data.push({
-            key: i,
-            label: `Option ${i}`,
-            disabled: i % 4 === 0,
-          });
-        }
-        return data;
-      })(),
-    },
-  },
+  // {
+  //   key: "transfer",
+  //   label: "穿梭框",
+  //   type: "transfer",
+  //   required: true,
+  //   full: true,
+  //   props: {
+  //     data: (() => {
+  //       const data = [];
+  //       for (let i = 1; i <= 15; i++) {
+  //         data.push({
+  //           key: i,
+  //           label: `Option ${i}`,
+  //           disabled: i % 4 === 0,
+  //         });
+  //       }
+  //       return data;
+  //     })(),
+  //   },
+  // },
 
-  {
-    key: "upload",
-    label: "上传",
-    type: "upload",
-    required: true,
-    full: true,
-    props: {
-      action: "http://localhost:8081",
-    },
-  },
-  {
-    key: "calendar",
-    label: "日历",
-    type: "calendar",
-    required: true,
-    full: true,
-  },
+  // {
+  //   key: "upload",
+  //   label: "上传",
+  //   type: "upload",
+  //   required: true,
+  //   full: true,
+  //   props: {
+  //     action: "http://localhost:8081",
+  //   },
+  // },
+  // {
+  //   key: "calendar",
+  //   label: "日历",
+  //   type: "calendar",
+  //   required: true,
+  // },
   {
     key: "test",
     label: "测试",
@@ -662,6 +678,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
     hide(arg0) {
       return arg0.textarea === "22";
     },
+    initValue: "测试1",
   },
   {
     key: "textarea",
@@ -672,6 +689,23 @@ const fieldConfigs = ref<RFormItemProps[]>([
     props: {
       maxlength: 100,
       showWordLimit: true,
+    },
+    disabled(arg0) {
+      return arg0["m-select"] === "1";
+    },
+    initValue: "mark",
+  },
+  {
+    key: "m-select",
+    label: "我的下拉框",
+    type: "m-select",
+    required: true,
+    opts: "d",
+    initValue: "1",
+    props: {
+      // options:'zlzl',
+      // opts: "getOption",
+      // dd:'fdsf'
     },
   },
 ]);

@@ -1,6 +1,6 @@
 <template>
   <div ref="formWrapRef">
-    <el-form ref="formRef" :model="formData" v-bind="props">
+    <el-form ref="formRef" :model="_formData" v-bind="props">
       <el-row :gutter="20">
         <template v-for="item in _fields">
           <el-col
@@ -18,6 +18,8 @@
                   <span :title="item.label">{{ item.label }}</span>
                 </slot>
               </template>
+
+              <!-- 渲染template插槽 -->
               <form-item-slot
                 v-if="item.slot"
                 :slots="formItemSlots"
@@ -25,8 +27,10 @@
                 :formData="_formData"
               />
 
+              <!-- 渲染render函数 -->
               <render-slot v-else-if="item.render" :render="item.render" />
 
+              <!-- 渲染组件 -->
               <form-component
                 v-else
                 :form-item="item"
@@ -51,7 +55,7 @@ import type {
   RFormViewProps,
 } from "../../../index";
 import { ElForm, ElFormItem, FormInstance, FormItemRule } from "element-plus";
-import formComponent from "../form-component/index.vue";
+import formComponent from "./form-component.vue";
 import FormItemSlot from "../../../../r-slot/form-item-slot";
 import RenderSlot from "../../../../r-slot/render-slot";
 
@@ -61,6 +65,7 @@ const props = withDefaults(defineProps<RFormCommonProps>(), {
   inline: true,
   "label-position": "top",
 });
+
 const _formData = ref<FormDataType>({});
 const formItemSlots = useSlots();
 const formRef = ref<FormInstance>();
@@ -87,7 +92,7 @@ watch(
   (val) => {
     _formData.value = setFormData(val);
   },
-  { deep: true, immediate: true }
+  { deep: true }
 );
 
 watch(

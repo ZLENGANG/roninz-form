@@ -1,4 +1,4 @@
-import { ElForm } from "element-plus";
+import type { ElForm } from "element-plus";
 import { Component } from "vue";
 
 type GridCount = {
@@ -33,6 +33,8 @@ export interface RFormCommonProps {
 
   /**表单字段 */
   fields: RFormItemProps[];
+
+  disabled?: boolean;
 }
 
 /**表单属性 */
@@ -152,7 +154,7 @@ export interface RFormItemProps {
   disabled?: boolean | ((arg0: AnyObject) => boolean);
 
   /**下拉框等选项配置 */
-  options?: any[];
+  options?: any[] | string;
 
   /**是否必填/必选 */
   required?: boolean;
