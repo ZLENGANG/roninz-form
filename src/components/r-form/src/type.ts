@@ -190,6 +190,9 @@ export interface RFormComponentProps {
 
 /**表单实例 */
 export type RFormInstance = {
+  /**获取表单数据 */
+  getFormData?: () => AnyObject;
+
   /**校验表单*/
   validate?: () => Promise<any> | undefined;
 

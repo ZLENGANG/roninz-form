@@ -23,6 +23,10 @@ const props = withDefaults(defineProps<RFormProps>(), {
 const formViewRef = ref<RFormInstance>();
 
 const exposeFn: RFormInstance = {
+  getFormData() {
+    return formViewRef.value?.getFormData?.() as AnyObject;
+  },
+
   validate() {
     return formViewRef.value?.validate?.();
   },

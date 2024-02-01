@@ -1,5 +1,5 @@
 <template>
-  <el-button type="primary" @click="submit">校验</el-button>
+  <!-- <el-button type="primary" @click="submit">校验</el-button>
   <el-button type="primary" @click="getFieldConfigyKey"
     >获取指定字段配置</el-button
   >
@@ -19,13 +19,13 @@
   <el-button type="primary" @click="setFieldValue">设置字段值</el-button>
   <el-button type="primary" @click="setField">设置字段</el-button>
   <el-button type="primary" @click="scrollToField">跳转到指定字段</el-button>
-  <el-button type="primary" @click="resetFields">重置表单</el-button>
+  <el-button type="primary" @click="resetFields">重置表单</el-button> -->
 
   <div
     v-if="isShow"
     style="margin: 0 auto; padding: 20px; boxshadow: var(--el-box-shadow-dark)"
   >
-    <r-form :fields="fieldConfigs" :formData="formData" ref="RRormRef">
+    <r-form :fields="fieldConfigs" :formData="formData" ref="RRormRef" readonly>
       <!-- <template v-slot:slot-age2>
         <el-button>click me</el-button>
       </template> -->
@@ -99,7 +99,7 @@ const fieldConfigs = ref<RFormItemProps[]>([
           {
             type: "primary",
             onClick() {
-              console.log(formData.value);
+              console.log(RRormRef.value?.getFormData?.());
             },
           },
           () => "查看"
@@ -162,9 +162,11 @@ const fieldConfigs = ref<RFormItemProps[]>([
       { label: "1班", value: "n1" },
       { label: "2班", value: "n2" },
     ],
-    props: {},
+    props: {
+      multiple: true,
+    },
     events: {},
-    initValue: "n1",
+    initValue: ["n1","n2"],
   },
   {
     key: "searchSuggest",

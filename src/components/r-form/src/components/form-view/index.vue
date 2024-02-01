@@ -81,6 +81,9 @@ defineExpose({
   resetFields: () => {
     formRef.value?.resetFields();
   },
+  getFormData() {
+    return _formData.value;
+  },
 });
 
 defineOptions({
@@ -175,7 +178,7 @@ function isDisabled(item: RFormItemProps) {
 
 /**处理表单数据 */
 function handleChangeValue(key: string, val: string) {
-  props.formData[key] = val;
+  _formData.value[key] = val;
 }
 
 /**校验 */
